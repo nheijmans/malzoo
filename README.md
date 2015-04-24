@@ -27,12 +27,12 @@ The following data is being collected from PE files:
 - Strings
 
 ######small side note
-With ZooKeeper it is quite simple: The more CPU cores you have to analyze the faster the analysis will go ofcourse. Same goes for disk I/O. Still, I think everyone
+With ZooKeeper it is quite simple: The more CPU cores you have to analyze the faster the analysis will go. Same goes for disk I/O. Still, I think everyone
 that is interested in using ZooKeeper with big amounts of data and not a extreme hardware setup can benefit from it and make large amounts of malware samples searchable
 within an acceptable timeframe. 
 
 #Installation
-ZooKeeper uses open source programs which needs to be installed before using it. For a short version, see the summary below.
+ZooKeeper uses open source programs which needs to be installed before using it. 
 
 ###Mongo Database
 Make sure to install the Mongo Database first and then the pymongo module. For detailed info
@@ -45,7 +45,7 @@ export LC_ALL=C
 
 ###YARA
 You will also need to install YARA by yourself. Install the package libtool (sudo apt-get libtool) first and then follow the official documentation.
-For details see, http://yara.readthedocs.org/en/v3.3.0/gettingstarted.html#compiling-and-installing-yara
+For details see, http://yara.readthedocs.org/en/v3.3.0/gettingstarted.html#compiling-and-installing-yara <br />
 If you are using Ubuntu or debian, prevent this error from happening:
 ```ImportError: libyara.so.0: cannot open shared object file: No such file or directory```
 and add the path /usr/local/lib to the loader configuration file, like so:
@@ -77,8 +77,10 @@ python setup.py build
 sudo python setup.py install
 ```
 
+Then extract the ZIP of ZooKeeper where you want to store the application (e.g. in /opt/) and you are ready to go (well, almost)
+
 #Configuration
-After the installation you need to adjust the configuration file app.conf in the config directory. I use the /opt/ folder in my setup and this is default in the config.
+After the installation you need to adjust the configuration file app.conf in the config directory. 
 Also don't forget to assign the correct number of CPU's, this will be used by the multiprocessing module of Python to start it's processes. 
 
 #Usage
@@ -95,8 +97,8 @@ python ZooKeeper -d /path/to/samples/ -t projectEvil_samples-2015-01-01
 [ ] Add the ClamAV module (Works as a seperate tool right now as it increases the time per sample)
 
 #Credit
-Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automated malware analyse by this project.
-Also a big thanks to all the developers of the modules and software used for making it available for everyone to use.
+Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automate malware analyse by this project.
+Also a big thanks to all the developers of the modules and software used and making it available for everyone to use.
 
 # License
-This project is released under the GPL 2.0 License. See the LICENSE.txt for details.
+This project is released under the GPL 2.0 License. See the LICENSE for details.
