@@ -1,0 +1,5 @@
+pefile
+pydeep
+python-magic
+bitstring
+pymongo
