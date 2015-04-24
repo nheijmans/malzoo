@@ -91,10 +91,10 @@ Example cmd:
 python ZooKeeper -d /path/to/samples/ -t projectEvil_samples-2015-01-01
 
 #ToDo / Idea's to make ZooKeeper better:  
-[ ] Support other file formats (e.g. PDF, APK, JAR)
-[ ] Directory monitor for live monitoring
-[ ] Add visualisation scripts (with the help of  matplotlib, numPy and Pandas)
-[ ] Add the ClamAV module (Works as a seperate tool right now as it increases the time per sample)
+- [ ] Support other file formats (e.g. PDF, APK, JAR)
+- [ ] Directory monitor for live monitoring
+- [ ] Add visualisation scripts (with the help of  matplotlib, numPy and Pandas)
+- [ ] Add the ClamAV module (Works as a seperate tool right now as it increases the time per sample)
 
 #Credit
 Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automate malware analyse by this project.
