@@ -44,7 +44,7 @@ export LC_ALL=C
 ```
 
 ###YARA
-You will also need to install YARA by yourself. Install the package libtool (sudo apt-get libtool) first and then follow the official documentation.
+You will also need to install YARA by yourself. Install the package libtool (sudo apt-get libtool) first and then follow the official documentation (don't forget the python module!).
 For details see, http://yara.readthedocs.org/en/v3.3.0/gettingstarted.html#compiling-and-installing-yara <br />
 If you are using Ubuntu or debian, prevent this error from happening:
 ```ImportError: libyara.so.0: cannot open shared object file: No such file or directory```
@@ -54,6 +54,7 @@ $ sudo su
 $ echo "/usr/local/lib" >> /etc/ld.so.conf
 $ ldconfig
 ```
+
 ###SSDeep
 And finally, install SSDeep: http://ssdeep.sourceforge.net/usage.html
 
