@@ -88,7 +88,9 @@ ZooKeeper has two mandatory arguments when you run it. The first one is the dire
 The other one is the tag you want to give the group of samples (e.g. 2015-01-01_Malwares). This way you can find
 the complete sample set or give a group of specific malware samples a unique label and find these with one search.
 Example cmd:
+```
 python ZooKeeper -d /path/to/samples/ -t projectEvil_samples-2015-01-01
+```
 
 #ToDo / Idea's to make ZooKeeper better:  
 - [ ] Support other file formats (e.g. PDF, APK, JAR)
