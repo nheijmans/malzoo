@@ -28,7 +28,7 @@ The following data is being collected from PE files:
 
 ######small side note
 With ZooKeeper it is quite simple: The more CPU cores you have to analyze the faster the analysis will go. Same goes for disk I/O. Still, I think everyone
-that is interested in using ZooKeeper with big amounts of data and not a extreme hardware setup can benefit from it and make large amounts of malware samples searchable
+that is interested in using ZooKeeper with big amounts of data and deos not have a extreme hardware setup can still benefit from it and make large amounts of malware samples searchable
 within an acceptable timeframe. 
 
 #Installation
