@@ -22,7 +22,7 @@ class GeneralInformation:
     def get_filename(self):
         """ Function that returns the self.filename, splitted from the path """
         splitted = self.filename.split('/')
-        fn = splitted[len(splitted)-1]
+        fn       = splitted[len(splitted)-1]
         return fn
 
     def get_filetype(self):
@@ -43,9 +43,9 @@ class GeneralInformation:
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         general_info = GeneralInformation(sys.argv[1])
-        filename = general_info.get_filename()
-        filetype = general_info.get_filetype()
-        filesize = general_info.get_filesize()
+        filename     = general_info.get_filename()
+        filetype     = general_info.get_filetype()
+        filesize     = general_info.get_filesize()
 
     elif len(sys.argv) > 2:
         print "Too many arguments, I can only handle one file at a time"

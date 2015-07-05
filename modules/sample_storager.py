@@ -12,7 +12,7 @@ def add_to_repository(sample):
     SAMPLE_DIR = conf_parser.get('data_location','repository_dir')
      
     hasher = Hasher(sample)
-    md5 = hasher.get_md5()
+    md5         = hasher.get_md5()
     archive_dir = SAMPLE_DIR+md5[:4]
     if os.path.exists(archive_dir) == False:
         os.makedirs(archive_dir)

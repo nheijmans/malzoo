@@ -19,10 +19,11 @@ from multiprocessing import Pool
 from modules.yara_index import create_yara_index
 
 def cron_run(directory, tag):
-    no_cpu = int(16)
-    pool = Pool(processes=no_cpu)
-    samples = os.listdir(directory)
-    samples_list = [directory + '/' + sample + ":" + tag for sample in samples]
+    no_cpu          = int(16)
+    pool            = Pool(processes=no_cpu)
+    samples         = os.listdir(directory)
+    samples_list    = [directory + '/' + sample + ":" + tag for sample in samples]
+
     pool.map(do_work, samples_list) # Execute the data extraction
 
 
@@ -39,15 +40,15 @@ parser.add_argument('-y','--update-yara', action='store_true', default=False,
 
 # Execution
 if __name__ == '__main__':
+    options     = parser.parse_args()
     conf_parser = SafeConfigParser()
     conf_parser.read('config/app.conf')
-    options = parser.parse_args()
 
     if options.tag and options.directory:
-        no_cpu = int(conf_parser.get('cpu_cores','cores'))
-        pool = Pool(processes=no_cpu)
-        samples = os.listdir(options.directory)
-        samples_list = [options.directory + '/' + sample + ":" + options.tag for sample in samples]
+        no_cpu          = int(conf_parser.get('cpu_cores','cores'))
+        pool            = Pool(processes=no_cpu)
+        samples         = os.listdir(options.directory)
+        samples_list    = [options.directory + '/' + sample + ":" + options.tag for sample in samples]
 
         print "[+] You are about to start ZooKeeper and collect information. "
         print "[*] please check if everyhing is correct: "  

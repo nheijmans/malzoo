@@ -27,10 +27,10 @@ class PeInfo:
 
     def __init__(self, filename, userdb):
         try:
-            self.userdb = userdb
-            self.pe = pefile.PE(filename)
-            self.language = []
-            self.filename = filename
+            self.userdb     = userdb
+            self.pe         = pefile.PE(filename)
+            self.language   = []
+            self.filename   = filename
 
         except pefile.PEFormatError:
             self.pe = False
@@ -49,7 +49,9 @@ class PeInfo:
         if self.pe != False:
             machine = 0  
             machine = self.pe.FILE_HEADER.Machine  
+
             return pefile.MACHINE_TYPE[machine] 
+
         else:
             return None
 
@@ -63,13 +65,14 @@ class PeInfo:
     def packer_detect(self):  
         """ attempt to detect the packer used """
         if self.pe != False:
-            signatures = peutils.SignatureDatabase(self.userdb)
-            matches = signatures.match_all(self.pe, ep_only=True)  
-            result = ''
+            signatures  = peutils.SignatureDatabase(self.userdb)
+            matches     = signatures.match_all(self.pe, ep_only=True)  
+            result      = ''
+            
             if matches != None:
                 for match in matches:
-                    m = ','.join(match)
-                    result = result+m
+                    m       = ','.join(match)
+                    result  = result+m
 
                 return result
             else:
@@ -122,7 +125,7 @@ class PeInfo:
             for rsrc in resources.keys():
                 (name,rva,size,type,lang,sublang) = resources[rsrc]
                 lang_holder.append(lang)
-                lang_count = collections.Counter(lang_holder)
+                lang_count  = collections.Counter(lang_holder)
                 lang_common = lang_count.most_common(1)
                 for lang_likely,occur in lang_common:
                     ret = lang_likely.split('_')[1]

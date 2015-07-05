@@ -55,10 +55,10 @@ class Hasher:
 if __name__ == '__main__':
     if len(sys.argv) == 2:
        hashbot = Hasher(sys.argv[1])
-       print "MD5: " + hashbot.get_md5()
-       print "SHA-1: " + hashbot.get_sha1()
-       print "Fuzzy: " + hashbot.get_fuzzy()
-       print "PE hash: " + hashbot.get_pehash()
+       print "MD5: "        + hashbot.get_md5()
+       print "SHA-1: "      + hashbot.get_sha1()
+       print "Fuzzy: "      + hashbot.get_fuzzy()
+       print "PE hash: "    + hashbot.get_pehash()
 
     elif len(sys.argv) > 2:
         print "Too many arguments, I can only handle one file at a time"
