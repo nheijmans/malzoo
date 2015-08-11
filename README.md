@@ -44,7 +44,7 @@ export LC_ALL=C
 ```
 
 ###YARA
-You will also need to install YARA by yourself. Install the packages libtool and autoconf (sudo apt-get install libtool autoconf) first and then follow the official documentation (don't forget the python module!).
+You will also need to install YARA by yourself. Install the packages libtool, bison and autoconf (sudo apt-get install libtool bison autoconf) first and then follow the official documentation (don't forget the python module!).
 For details see, http://yara.readthedocs.org/en/v3.3.0/gettingstarted.html#compiling-and-installing-yara <br />
 If you are using Ubuntu or debian, prevent this error from happening:
 ```ImportError: libyara.so.0: cannot open shared object file: No such file or directory```
