@@ -58,11 +58,11 @@ $ ldconfig
 ###SSDeep
 And finally, install SSDeep: http://ssdeep.sourceforge.net/usage.html
 
-###Python dependancies
+###Python dependencies
 Most of the python libraries that are used can be installed via PIP with:
 ```pip install -r requirements.txt```
 
-###Other Python dependancies
+###Other Python dependencies
 ####Python-magic
 The magic library will give an error for some strange reason when installed via PIP so I advice downloading it from Github (https://github.com/ahupp/python-magic)
 or if you are using a Debian based distribution via the package manager:
