@@ -50,7 +50,7 @@ if __name__ == '__main__':
         samples         = os.listdir(options.directory)
         samples_list    = [options.directory + '/' + sample + ":" + options.tag for sample in samples]
 
-        print "[+] You are about to start ZooKeeper and collect information. "
+        print "[+] You are about to start MalZoo and collect information. "
         print "[*] please check if everyhing is correct: "  
         print "[*] Path to samples: ", options.directory 
         print "[*] No. of samples: ", str(len(samples_list)) 
