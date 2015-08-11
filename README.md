@@ -1,11 +1,11 @@
-#What is ZooKeeper?
-ZooKeeper is a mass static malware analysis tool that collects the information in a Mongo database
+#What is MalZoo?
+MalZoo is a mass static malware analysis tool that collects the information in a Mongo database
 and moves the malware samples to a repository directory based on the first 4 chars of the MD5 hash.
 It was build as a internship project to analyze sample sets of 50 G.B.+ (e.g. from http://virusshare.com).
 
 A few examples where it can be used for:
 - Use the collected information to visualize the results (e.g. see most used compile languages, packers etc.),
-- Add ZooKeeper to cron and analyze a specific directory to collect information,
+- Add MalZoo to cron and analyze a specific directory to collect information,
 - Gather intell of large open source malware repositories (original intend of the project)
 - Visualize the results that are stored in the Mongo DB by exporting them to Splunk (http://splunk.com). Exclude the strings field tho if you are using the free version!
 
@@ -27,12 +27,12 @@ The following data is being collected from PE files:
 - Strings
 
 ######small side note
-With ZooKeeper it is quite simple: The more CPU cores you have to analyze the faster the analysis will go. Same goes for disk I/O. Still, I think everyone
-that is interested in using ZooKeeper with big amounts of data and does not have a extreme hardware setup can still benefit from it and make large amounts of malware samples searchable
+With MalZoo it is quite simple: The more CPU cores you have to analyze the faster the analysis will go. Same goes for disk I/O. Still, I think everyone
+that is interested in using MalZoo with big amounts of data and does not have a extreme hardware setup can still benefit from it and make large amounts of malware samples searchable
 within an acceptable timeframe. 
 
 #Installation
-ZooKeeper uses open source programs which needs to be installed before using it. 
+MalZoo uses open source programs which needs to be installed before using it. 
 
 ###Mongo Database
 Make sure to install the Mongo Database first and then the pymongo module. For detailed info
@@ -78,22 +78,22 @@ python setup.py build
 sudo python setup.py install
 ```
 
-Then extract the ZIP of ZooKeeper where you want to store the application (e.g. in /opt/) and you are ready to go (well, almost)
+Then extract the ZIP of MalZoo where you want to store the application (e.g. in /opt/) and you are ready to go (well, almost)
 
 #Configuration
 After the installation you need to adjust the configuration file app.conf in the config directory. 
 Also don't forget to assign the correct number of CPU's, this will be used by the multiprocessing module of Python to start it's processes. 
 
 #Usage
-ZooKeeper has two mandatory arguments when you run it. The first one is the directory with malware samples.
+MalZoo has two mandatory arguments when you run it. The first one is the directory with malware samples.
 The other one is the tag you want to give the group of samples (e.g. 2015-01-01_Malwares). This way you can find
 the complete sample set or give a group of specific malware samples a unique label and find these with one search.
 Example cmd:
 ```
-python ZooKeeper -d /path/to/samples/ -t projectEvil_samples-2015-01-01
+python MalZoo.py -d /path/to/samples/ -t projectEvil_samples-2015-01-01
 ```
 
-#ToDo / Idea's to make ZooKeeper better:  
+#ToDo / Idea's to make MalZoo better:  
 - [ ] Support other file formats (e.g. PDF, APK, JAR)
 - [ ] Directory monitor for live monitoring
 - [ ] Add visualisation scripts (with the help of  matplotlib, numPy and Pandas)
