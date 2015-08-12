@@ -6,6 +6,7 @@ Currently, it can calculate:
     [*] SHA-1
     [*] PE hash
     [*] Fuzzy hash
+    [*] Import hash
 
 The script can be run on itself and will return the listed hashes of a FILE. 
 Usage example: python hasher.py putty.exe
@@ -13,16 +14,18 @@ Usage example: python hasher.py putty.exe
 Note that only PE files are supported with PE hash
 
 TODO:
+    [ ] Peform a filetype check
     [ ] Add more hash types
-    [ ] Add exception handling
+    [ ] Create exception handling
 """
 
 # Imports
 import sys
+import pefile
 from hashlib import md5 as md5sum
 from hashlib import sha1 as sha1sum
 from pydeep import hash_file as fuzzy
-from modules.pehash import pehash as ph
+from pehash import pehash as ph
 
 class Hasher:
     """ Class for calculating MD5, SHA-1, fuzzy and PE hashes """
@@ -51,14 +54,27 @@ class Hasher:
         pe_hash = ph(self.filename)
         return pe_hash
 
+    def get_imphash(self):
+        imphash = None
+        try:
+            pe = pefile.PE(self.filename)
+            imphash = pe.get_imphash(pe)
+
+        except:
+            pass
+
+        return imphash
+
+
 # If the script is running on itself, one argument is accepted and will print the hashes for that file.
 if __name__ == '__main__':
     if len(sys.argv) == 2:
        hashbot = Hasher(sys.argv[1])
-       print "MD5: "        + hashbot.get_md5()
-       print "SHA-1: "      + hashbot.get_sha1()
-       print "Fuzzy: "      + hashbot.get_fuzzy()
-       print "PE hash: "    + hashbot.get_pehash()
+       print "MD5: " + hashbot.get_md5()
+       print "SHA-1: " + hashbot.get_sha1()
+       print "Fuzzy: " + hashbot.get_fuzzy()
+       print "PE hash: " + hashbot.get_pehash()
+       print "Imp hash: " + hashbot.get_imphash()
 
     elif len(sys.argv) > 2:
         print "Too many arguments, I can only handle one file at a time"
