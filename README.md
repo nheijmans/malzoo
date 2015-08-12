@@ -94,7 +94,7 @@ python MalZoo.py -d /path/to/samples/ -t projectEvil_samples-2015-01-01
 ```
 
 #ToDo / Idea's to make MalZoo better:  
-- [] Support other file formats (e.g. PDF, APK, JAR)
+- [ ] Support other file formats (e.g. PDF, APK, JAR)
 - [x] Directory monitor for live monitoring
 - [ ] Add visualisation scripts (with the help of  matplotlib, numPy and Pandas)
 - [ ] Add ClamAV module (Works as a seperate tool right now but it increases the time per sample if added to the automated analysis)
