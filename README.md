@@ -18,6 +18,7 @@ The following data is being collected from PE files:
 - SHA-1 hash
 - PE hash
 - Fuzzy hash
+- Imphash
 - YARA rules that match
 - PE compile time
 - Imported DLL's
