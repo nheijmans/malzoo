@@ -33,66 +33,7 @@ that is interested in using MalZoo with big amounts of data and does not have a 
 within an acceptable timeframe. 
 
 #Installation
-MalZoo uses open source programs which needs to be installed before using it. 
-
-###Mongo Database
-Make sure to install the Mongo Database first and then the pymongo module. For detailed info
-on how to install mongo, see: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb
-
-When you are going to use the mongo CLI and you get a locale error, it might be fixed with this cmd:
-```
-export LC_ALL=C
-```
-
-###YARA
-You will also need to install YARA by yourself. Install the packages libtool, bison and autoconf (sudo apt-get install libtool bison autoconf) first and then follow the official documentation (don't forget the python module!).
-For details see, http://yara.readthedocs.org/en/v3.3.0/gettingstarted.html#compiling-and-installing-yara <br />
-If you are using Ubuntu or debian, prevent this error from happening:
-```ImportError: libyara.so.0: cannot open shared object file: No such file or directory```
-and add the path /usr/local/lib to the loader configuration file, like so:
-```
-$ sudo su
-$ echo "/usr/local/lib" >> /etc/ld.so.conf
-$ ldconfig
-```
-
-###SSDeep
-And finally, install SSDeep: http://ssdeep.sourceforge.net/usage.html
-
-###Python dependencies
-Most of the python libraries that are used can be installed via PIP with:
-```pip install -r requirements.txt```
-
-###Other Python dependencies
-####Python-magic
-The magic library will give an error for some strange reason when installed via PIP so I advice downloading it from Github (https://github.com/ahupp/python-magic)
-or if you are using a Debian based distribution via the package manager:
-```sudo apt-get update; sudo apt-get install python-magic```
-
-####Pydeep
-Install Pydeep with the following commands:
-```
-wget https://github.com/kbandla/pydeep/archive/master.zip
-unzip master.zip
-cd pydeep-master
-python setup.py build
-sudo python setup.py install
-```
-
-Then extract the ZIP of MalZoo where you want to store the application (e.g. in /opt/) and you are ready to go (well, almost)
-
-#Configuration
-After the installation you need to adjust the configuration file app.conf in the config directory. 
-Also don't forget to assign the correct number of CPU's, this will be used by the multiprocessing module of Python to start it's processes. 
-
-#Usage
-MalZoo has two mandatory arguments when you run it. The first one is the directory with malware samples.
-The other one is the tag you want to give the group of samples (e.g. 2015-01-01_Malwares). This way you can find
-the complete sample set or give a group of specific malware samples a unique label and find these with one search.
-Example cmd:
-```
-python MalZoo.py -d /path/to/samples/ -t projectEvil_samples-2015-01-01
-```
+See the Wiki [Installation](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration) page
 
 #ToDo / Idea's to make MalZoo better:  
 - [ ] Support other file formats (e.g. PDF, APK, JAR)
