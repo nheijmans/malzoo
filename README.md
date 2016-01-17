@@ -5,7 +5,6 @@ so correlations between malware samples can be found. This can aid as input for 
 
 A few use cases are:
 * Use the collected information to get insights in malware (e.g. see most used packers),
-* Analyze a specific directory to collect information from samples added,
 * Gather intell of large open source malware repositories, 
 * Visualize the results by exporting them to a data analysis tool (e.g. [Splunk](https://www.splunk.com))
 
