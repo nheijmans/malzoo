@@ -4,7 +4,7 @@ It was build for an internship project to analyze sample sets of 50 G.B.+ (e.g. 
 so correlations between malware samples can be found. This can aid as input for Threat Intelligence or help incident response to classify a sample.
 
 A few use cases are:
-* Use the collected information to see correlations (e.g. see most used packers),
+* Use the collected information to get insights in malware (e.g. see most used packers),
 * Analyze a specific directory to collect information from samples added,
 * Gather intell of large open source malware repositories, 
 * Visualize the results by exporting them to a data analysis tool (e.g. [Splunk](https://www.splunk.com))
