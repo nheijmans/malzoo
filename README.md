@@ -9,22 +9,7 @@ A few use cases are:
 * Visualize the results by exporting them to a data analysis tool (e.g. [Splunk](https://www.splunk.com))
 
 ## Information collected
-The following data is being collected from PE files:
-* Filename of the sample
-* Filetype
-* Filesize
-* MD5 hash
-* SHA-1 hash
-* PE hash
-* Fuzzy hash
-* Imphash
-* YARA rules that match
-* PE compile time
-* Imported DLL's
-* PE packer information (if available)
-* PE language
-* Original filename (if available)
-* Strings
+See the Wiki [Collected data](https://github.com/nheijmans/MalZoo/wiki/Collected-data) page
 
 # Installation
 See the Wiki [Installation](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration) page
