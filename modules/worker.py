@@ -29,7 +29,7 @@ def do_work(q, processid):
                 # Create objects from the classes
                 hasher = Hasher(sample)
                 general_info = GeneralInformation(sample)
-                pe_info = PeInfo(sample, 'userdb.txt')
+                pe_info = PeInfo(sample, 'data/userdb.txt')
                 db_commands = MongoDatabase() 
 
                 ft = general_info.get_filetype()
