@@ -1,5 +1,7 @@
 #!/usr/bin/python
 """
+File is part of Malzoo
+
 The class GeneralInformation is used to extract the following information:
     [*] Filename
     [*] Filetype
@@ -35,20 +37,3 @@ class GeneralInformation:
         # TODO Calclate the size in KB
         fs = os.path.getsize(self.filename)
         return fs
-
-
-    
-    
-# If the script is running on itself, one argument is accepted and will print the strings for that file.
-if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        general_info = GeneralInformation(sys.argv[1])
-        filename     = general_info.get_filename()
-        filetype     = general_info.get_filetype()
-        filesize     = general_info.get_filesize()
-
-    elif len(sys.argv) > 2:
-        print "Too many arguments, I can only handle one file at a time"
-
-    else:
-        print "No file to process... Quitting now!"

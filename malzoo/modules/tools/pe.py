@@ -24,7 +24,6 @@ import datetime
 import collections
 
 class PeInfo:
-
     def __init__(self, filename, userdb):
         try:
             self.userdb     = userdb
@@ -34,6 +33,7 @@ class PeInfo:
 
         except pefile.PEFormatError:
             self.pe = False
+            pass
 
     def get_dll(self):
         """ Extract the imported DLL files from the PE file """
@@ -58,7 +58,9 @@ class PeInfo:
     def get_compiletime(self):
         """ Extract the compile time """
         if self.pe != False:
-            return datetime.datetime.fromtimestamp(self.pe.FILE_HEADER.TimeDateStamp)  
+            compiletime = datetime.datetime.fromtimestamp(self.pe.FILE_HEADER.TimeDateStamp)  
+            return compiletime.strftime("%Y-%m-%d %H:%M:%S")
+
         else:
             return None
 
@@ -106,12 +108,11 @@ class PeInfo:
                                         i += 1
                                     except pefile.PEFormatError:
                                         pass
-            return ret  
-
         except:
-            return False 
-
-
+            ret = False 
+            pass
+        finally:
+            return ret
 
     def get_language(self):
         """ 
@@ -141,26 +142,10 @@ class PeInfo:
             try:
                 self.pe.full_load()
                 fn = self.pe.FileInfo[0].StringTable[0].entries['OriginalFilename']
-                return fn
             except:
-                return None
+                fn = None
+                pass
+            finally:
+                return fn
         else:
             return None
-                                                    
-
-# If the script is running on itself, one argument is accepted and will print the strings for that file.
-if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        pe_info = PeInfo(sys.argv[1], 'userdb.txt')
-        print pe_info.get_dll()
-        print pe_info.packer_detect()
-        print pe_info.get_compiletime()
-        print pe_info.get_cpu_type()
-        print pe_info.get_language()
-        print pe_info.get_org_filename()
-
-    elif len(sys.argv) > 2:
-        print "Too many arguments, I can only handle one file at a time"
-
-    else:
-        print "No file to process... Quitting now!"

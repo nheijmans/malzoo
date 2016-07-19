@@ -22,17 +22,3 @@ def strings(filename):
         
         strings_UTF = [unicode(s,'utf-8','ignore') for s in strings]
         return strings_UTF
-
-
-# If the script is running on itself, one argument is accepted and will print the strings for that file.
-if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        result = strings(sys.argv[1])
-        for entry in result:
-            print entry
-
-    elif len(sys.argv) > 2:
-        print "Too many arguments, I can only handle one file at a time"
-
-    else:
-        print "No file to process... Quitting now!"
