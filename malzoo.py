@@ -38,13 +38,7 @@ from malzoo.modules.services.distributor   import DistributeBot
 from malzoo.modules.tools.signatures       import Signatures
 
 # Argument definition
-parser = argparse.ArgumentParser()
-parser.add_argument('-t','--tag', action='store', dest='tag', default='malzoo',
-           help='Assign this tag to the samples')
-
-parser.add_argument('-s','--samples', action='store', dest='samples', 
-           help='Analyse malware samples in directory and quit')
-
+parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis', version='Malzoo-v2.0')
 parser.add_argument('-u','--update-yara', action='store_true', default=False,
            dest='yara', help='Update the YARA index')
 
@@ -63,62 +57,8 @@ if __name__ == '__main__':
     other_queue  = Queue()
     nr_processes = int(conf.get('settings','nr_workers'))
 
-    # Option --samples
-    if  options.samples:
-        samples      = os.listdir(options.samples)
-        samples_list = [{'file':options.samples + '/' + sample, 
-                         'tag':options.tag} for sample in samples]
-        sample_queue = Queue()
-
-        # Filling up the queue with samples
-        for sample in samples_list:
-            sample_queue.put(sample)
-
-        print "[+] You are about to start MalZoo and collect information. "
-        print "[*] please check if everyhing is correct: "  
-        print "[*] Path to samples: ", options.samples 
-        print "[*] No. of samples: ", str(sample_queue.qsize())
-        print "[*] No. of threads to use: ", str(nr_processes) 
-        print "[*] The tag to identify this set:", options.tag  
-        y_n = raw_input("[!] Is this correct? [y/n]: ")
-        check = y_n.lower()
-
-        if check == 'y' or check == 'yes':
-            print "\n[*] Starting the analysis:"
-            try:
-                # Setup the threads for analysis
-                jobs = []
-                for i in range(nr_processes):
-                    p = Process(target=pe_worker, args=(sample_queue,i,))
-                    p.daemon = True
-                    jobs.append(p)
-
-                for job in jobs:
-                    job.start()
-
-                while True:
-                    if sample_queue.empty():
-                        print "[*] Done, waiting 30 sec. to close down"
-                        time.sleep(30)
-                        break
-                    else:
-                        time.sleep(5)
-
-                for job in jobs:
-                    print "terminating", job.name
-                    job.terminate()
-
-                print "[+] Done with analysis!"
-
-            except Exception, e:
-                print "[!] Error thingie: ", e
-                pass
-        elif check == 'n' or check == 'no':
-            print "[-] The operation is cancelled."
-            sys.exit()
-
     # Option --yara-update
-    elif options.yara:
+    if options.yara:
         print "[*] Updating YARA index..."
         sigs_yara = Signatures()
         sigs_yara.generate_index()
