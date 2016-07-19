@@ -1,8 +1,0 @@
-pefile
-python-magic
-bitstring
-pymongo
-oletools
-olefile
-bottle
-simpleldap
