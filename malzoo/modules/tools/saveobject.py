@@ -33,12 +33,12 @@ class SaveObject:
             #Send saved file to MalZoo,Cuckoo and Viper
             sample = dict()
             sample['md5']       = md5_hash
-            sample['tag']       = tag
+            sample['id_tag']    = tag
             sample['filename']  = 'attachments/'+md5_hash
             dist_q.put(sample)
 
             #Setup data dict for return
-            data['tag']         = tag
+            data['id_tag']      = tag
             data['md5']         = md5_hash
             data['sha1']        = sha1_hash
             data['filename']    = filename
