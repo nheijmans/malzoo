@@ -143,6 +143,7 @@ class EmailWorker(Worker):
         """ 
         Parse each email and extract attachment(s) 
         """
+	print "working on e-mail"
         try:
             etk = EmailToolkit()
             #Variables for adding data
@@ -175,7 +176,7 @@ class EmailWorker(Worker):
                 mail_info['submit_date'] = int(time())
                 mail_info['sample_type']       = 'email'
 
-                if self.conf.getboolean('workers','adlookup'):
+                if self.conf.getboolean('ad','adlookup'):
                     adresults = self.ad_request(mail_info['from'], mail_info['to'])
                     mail_info['department']    = adresults[0]
                     mail_info['country_code']  = adresults[1]
@@ -230,7 +231,7 @@ class EmailWorker(Worker):
                     mail_info['sample_type'] = 'email'
 
                     # !!! EXPERIMENTAL !!!
-                    if self.conf.getboolean('workers','adlookup'):
+                    if self.conf.getboolean('ad','adlookup'):
                         adresults = self.ad_request(mail_info['from'], mail_info['to'])    
                         mail_info['department']   = adresults[0]
                         mail_info['country_code'] = adresults[1]
