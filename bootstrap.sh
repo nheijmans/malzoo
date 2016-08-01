@@ -48,9 +48,10 @@ cd $HOME
 sleep 2
 #malzoo
 git clone https://github.com/nheijmans/MalZoo.git
-cd malZoo
+cd MalZoo
 sudo pip install -r requirements.txt
 cp config/malzoo.conf.dist config/malzoo.conf
+mkdir attachments storage uploads
 cd $HOME
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 sleep 2
