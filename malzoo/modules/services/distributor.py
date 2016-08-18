@@ -52,7 +52,6 @@ class DistributeBot(Distributor):
 
                     sig   = Signatures()
                     match = sig.scan(sample['filename'])
-                    print 'MATCH:',match
                     #Determine to which worker the file is assigned based on the mime
                     if ft[0:35] == 'Composite Document File V2 Document':
                         self.doc_q.put(sample)
@@ -61,7 +60,6 @@ class DistributeBot(Distributor):
                         self.pe_q.put(sample)
                         result = {'result':'success'}
                     elif ft[0:11] == 'Zip archive' and match != 'java_archive':
-                        print "IT WORKS :D"
                         self.zip_q.put(sample)
                         result = {'result':'success'}
                     else:
