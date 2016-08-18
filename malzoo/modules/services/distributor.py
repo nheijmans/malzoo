@@ -12,6 +12,7 @@ from malzoo.common.abstract              import Distributor
 from malzoo.modules.services.apis        import *
 from malzoo.modules.tools.general_info   import GeneralInformation
 from malzoo.modules.tools.database       import MongoDatabase
+from malzoo.modules.tools.signatures	 import Signatures
 
 class DistributeBot(Distributor):
     """
@@ -21,6 +22,7 @@ class DistributeBot(Distributor):
         cuckoo    = CuckooService()
         viper     = ViperService()
         mongodb   = MongoDatabase()
+        yarasigs  = Signatures()
         filename  = sample['filename']
         ext       = filename.split('.')[-1]
         whitelist = self.conf.get('settings','whitelist')
@@ -48,6 +50,9 @@ class DistributeBot(Distributor):
                     if self.conf.getboolean('cuckoo','enabled') and ft[0:11] != 'Zip archive':
                         cuckoo.submit(package)
 
+                    sig   = Signatures()
+                    match = sig.scan(sample['filename'])
+                    print 'MATCH:',match
                     #Determine to which worker the file is assigned based on the mime
                     if ft[0:35] == 'Composite Document File V2 Document':
                         self.doc_q.put(sample)
@@ -55,7 +60,8 @@ class DistributeBot(Distributor):
                     elif ft[0:4] == 'PE32':
                         self.pe_q.put(sample)
                         result = {'result':'success'}
-                    elif ft[0:11] == 'Zip archive' and filename[-4:] == '.zip':
+                    elif ft[0:11] == 'Zip archive' and match != 'java_archive':
+                        print "IT WORKS :D"
                         self.zip_q.put(sample)
                         result = {'result':'success'}
                     else:

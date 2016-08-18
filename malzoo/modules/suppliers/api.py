@@ -51,7 +51,7 @@ def WebApi(dist_q):
             sample['md5'] = hashbot.get_md5()
 
             dist_q.put(sample)
-            return "File submitted for analysis!"
+            return "File submitted for analysis!\n"
         else:
             return "Sample already in uploads directory!"
         

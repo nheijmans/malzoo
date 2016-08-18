@@ -6,3 +6,4 @@ oletools
 olefile
 bottle
 simpleldap
+yara-python

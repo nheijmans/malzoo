@@ -14,16 +14,13 @@ export LC_ALL=C
 sudo service mongod start
 sleep 2
 #YARA
-wget https://github.com/plusvic/yara/archive/v3.4.0.tar.gz
-tar -zxf v3.4.0.tar.gz
-cd yara-3.4.0
+wget https://github.com/VirusTotal/yara/archive/v3.5.0.tar.gz
+tar -zxf v3.5.0.tar.gz
+cd yara-3.5.0
 ./bootstrap.sh
 ./configure
 make
 sudo make install
-cd yara-python
-python setup.py build
-sudo python setup.py install
 sudo echo "/usr/local/lib" >> /etc/ld.so.conf
 sudo ldconfig
 cd $HOME
@@ -49,11 +46,11 @@ sleep 2
 #malzoo
 git clone https://github.com/nheijmans/MalZoo.git
 cd MalZoo
-sudo pip install -r requirements.txt
+sudo pip install -r requirements.txt -U
 cp config/malzoo.conf.dist config/malzoo.conf
 mkdir attachments storage uploads
 cd $HOME
+rm -r master.zip pydeep-master ssdeep-2.13 ssdeep.tar.gz v3.4.0.tar.gz yara-3.4.0
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 sleep 2
-rm -r master.zip pydeep-master ssdeep-2.13 ssdeep.tar.gz v3.4.0.tar.gz yara-3.4.0
 echo "[+] Done installing!"

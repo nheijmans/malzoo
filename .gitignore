@@ -1,3 +1,5 @@
-*.conf
+config/malzoo.conf
 *.pyc
-
+uploads/*
+attachments/*
+storage/*
