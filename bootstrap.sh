@@ -44,8 +44,8 @@ sudo python setup.py install
 cd $HOME
 sleep 2
 #malzoo
-git clone https://github.com/nheijmans/MalZoo.git
-cd MalZoo
+git clone https://github.com/nheijmans/malzoo.git
+cd malzoo
 sudo pip install -r requirements.txt -U
 cp config/malzoo.conf.dist config/malzoo.conf
 mkdir attachments storage uploads

@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
             if conf.getboolean('suppliers','dir'):
                 print "[+] Starting Directory monitor!"
-                monitor = Monitor(pe_queue,doc_queue)
+                monitor = Monitor(dist_queue)
                 dp = Process(target=monitor.directory, args=(conf.get('settings','dirmonitor'),))
                 dp.daemon = True
                 dp.start()

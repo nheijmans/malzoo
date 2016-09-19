@@ -29,7 +29,7 @@ class MongoDatabase:
 
     def search(self, md5):
         collection  = self.db.malware_samples
-        result      = collection.find_one({'md5':md5},{'md5':1, '_id':0})
+        result      = self.collection.find_one({'md5':md5['md5']},{'md5':1, '_id':0})
         if result == None:
             return False
         else:

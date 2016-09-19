@@ -11,3 +11,42 @@ rule java_archive {
     condition:
         $magic at 0 and 1 of ($string_*)
 }
+
+rule image_jpg {
+    meta:
+        description = "JPEG Image"
+        extension = "JPEG"
+        author = "nheijmans"
+
+    strings:
+        $magic = { FF D8 }
+
+    condition:
+        $magic at 0
+}
+
+rule image_png {
+    meta:
+        description = "PNG Image"
+        extension = "PNG"
+        author = "nheijmans"
+
+    strings:
+        $magic = { 89 50 }
+
+    condition:
+        $magic at 0
+}
+
+rule image_gif {
+    meta:
+        description = "GIF Image"
+        extension = "GIF"
+        author = "nheijmans"
+
+    strings:
+        $magic = { 47 49 }
+
+    condition:
+        $magic at 0
+}

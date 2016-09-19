@@ -53,7 +53,7 @@ def WebApi(dist_q):
             dist_q.put(sample)
             return "File submitted for analysis!\n"
         else:
-            return "Sample already in uploads directory!"
+            return "Sample already in uploads directory!\n"
         
     def start_api():
         conf = SafeConfigParser()
