@@ -11,6 +11,7 @@ from multiprocessing    import Process
 from malzoo.modules.tools.database import MongoDatabase
 from malzoo.modules.tools.storager import add_to_repository
 from malzoo.modules.tools.splunk   import add_data as splunkie
+from malzoo.modules.tools.es       import add_data as elastic
 from malzoo.modules.tools.hashes   import Hasher
 
 class Worker(Process):
@@ -30,6 +31,8 @@ class Worker(Process):
             splunkie(data)
         if self.conf.getboolean('mongo','enabled'):
             mongodb.add_sample(data)
+        if self.conf.getboolean('elasticsearch','enabled'):
+            elastic(data)
         return
 
     def store_sample(self, sample):

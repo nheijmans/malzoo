@@ -20,7 +20,7 @@ dirmonitor  = monitored/
 # Which platform should be used to see if the sample is already in the database.
 # options are: mongo or viper. If empty, Malzoo won't check if the file is already analyzed
 # and will submit the file for analysis. Default is mongo.
-duplicatecheck = mongo
+duplicatecheck = 
 
 # Components
 # Enable/disable the sample suppliers that should be started
@@ -46,12 +46,6 @@ email_regex =
 # The e-mail address of the Abuse mailbox. This is used by the Active Directory check
 emailaddr   = 
 
-# Database settings
-[mongo]
-enabled     = no
-db          = malware 
-collection  = samples 
-
 # Email settings
 [imap]
 username    = 
@@ -68,6 +62,19 @@ host        =
 port        = 
 index       = 
 token       = Splunk xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+# ElasticSearch settings
+[elasticsearch]
+enabled	    = no
+index       = malzoo
+host        = localhost
+port        = 9200
+
+# Mongo settings
+[mongo]
+enabled     = no
+db          = malware 
+collection  = samples 
 
 # API's
 [malzoo]

@@ -50,7 +50,7 @@ sudo pip install -r requirements.txt -U
 cp config/malzoo.conf.dist config/malzoo.conf
 mkdir attachments storage uploads
 cd $HOME
-rm -r master.zip pydeep-master ssdeep-2.13 ssdeep.tar.gz v3.4.0.tar.gz yara-3.4.0
+rm -r master.zip pydeep-master ssdeep-2.13 ssdeep.tar.gz v3.5.0.tar.gz yara-3.5.0
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 sleep 2
 echo "[+] Done installing!"
