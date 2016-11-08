@@ -35,30 +35,26 @@ class Imap:
     def list_mailboxes(self):
         """ Retrieve all folders and subfolders """
         try:
-            #c = self.open_connection()
             c = self.c
             response_code, data = c.list()
         except Exception as e:
             print e
         finally:
-            #c.logout()
             return data
     
     def get_ids(self, mailbox):
         """ 
         Get all messages from the given folder and return the ID numbers 
         """
-        #c = self.open_connection()
         c = self.c
         msg_ids = []
         try:
             response, data = c.select(mailbox,readonly=True)
             num_msgs = int(data[0])
             response, msg_ids = c.search(None, '(UNSEEN)')
-    
+        except Exception as e:
+            print e
         finally:
-            #c.close()
-            #c.logout()
             return msg_ids
     
     def fetch_mail(self, mailbox, batch_ids):
@@ -66,7 +62,6 @@ class Imap:
         For each mail ID, fetch the whole email and parse it with msgparser 
         """
         try:
-            #c = self.open_connection()
             c = self.c
             response, data = c.select(mailbox)
             response, messages = c.fetch(batch_ids,"(RFC822)")
@@ -74,37 +69,29 @@ class Imap:
             messages = None
             print e
         finally:
-            #c.close()
-            #c.logout()
             return messages
     
     def copy_message(self, mailbox, ID, target):
         """ Copy a message to the target folder """
         success = False
         try:
-            #c = self.open_connection()
             c = self.c
             response, data = c.select(mailbox)
             c.copy(ID,target)
             success = True
         finally:
-            #c.close()
-            #c.logout()
             return success
         
     def move_message(self, mailbox, ID, target):
         """ Move a message to the target folder """
         success = False
         try:
-            #c = self.open_connection()
             c = self.c
             response, data = c.select(mailbox)
             c.copy(ID,target)
             c.store(ID, '+FLAGS', '\\Deleted')
             success = True
         finally:
-            #c.close()
-            #c.logout()
             return success
 
     def run(self, mail_q):
@@ -129,10 +116,8 @@ class Imap:
                 try:
             # 2. Get ID's from new messages in mailbox INBOX
                     email_ids   = self.get_ids(mailbox)     
-    
                     if email_ids[0] != '': 
                         batch_ids   = ','.join(email_ids[0].split())
-    
             # 3. Get the messages from defined mailbox and the list of ID's
                         emails      = self.fetch_mail(mailbox, batch_ids)
                         if emails != None:
