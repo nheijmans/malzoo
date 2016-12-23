@@ -22,12 +22,11 @@ class DistributeBot(Distributor):
         cuckoo    = CuckooService()
         viper     = ViperService()
         mongodb   = MongoDatabase()
-        yarasigs  = Signatures()
         filename  = sample['filename']
-        ext       = filename.split('.')[-1]
-        whitelist = self.conf.get('settings','whitelist')
+        yarasigs  = Signatures()
+        match = yarasigs.scan(sample['filename'], rule='unwanted.yara')
         
-        if ext not in whitelist:
+        if not match:
             if 'md5' in sample:
                 if self.conf.get('settings','duplicatecheck') == 'viper':
                     known = viper.search({'md5':sample['md5']})
@@ -50,8 +49,7 @@ class DistributeBot(Distributor):
                     if self.conf.getboolean('cuckoo','enabled') and ft[0:11] != 'Zip archive':
                         cuckoo.submit(package)
 
-                    sig   = Signatures()
-                    match = sig.scan(sample['filename'])
+                    match = yarasigs.scan(sample['filename'])
                     #Determine to which worker the file is assigned based on the mime
                     if ft[0:35] == 'Composite Document File V2 Document':
                         self.doc_q.put(sample)
@@ -70,5 +68,5 @@ class DistributeBot(Distributor):
             else:
                 return {'error':'No md5 given'}
         else:
-            print filename, "is on the whitelist"
+            print filename, "is in the unwanted yara rule"
             return

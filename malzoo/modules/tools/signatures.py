@@ -11,15 +11,19 @@ class Signatures:
     in the configuration file malzoo.conf
     """
 
-    def scan(self, filename):
+    def scan(self, filename, rule=None):
         # Open configuration file and get yara rules location
         conf_parser = SafeConfigParser()
         conf_parser.read('config/malzoo.conf')
+        rule_path = conf_parser.get('settings','yara_rules')
     
-        rules_location = conf_parser.get('settings','yara_rules')
+        if rule:
+            rules_location='{0}/{1}'.format(rule_path,rule)
+        else:
+            rules_location = '{0}/{1}'.format(rule_path,'index.yara')
         
         # Compile the rules in the index.yara and find matches on the sample
-        rules   = yara.compile(rules_location + 'index.yara')
+        rules   = yara.compile(rules_location)
         matches = [str(rule) for rule in rules.match(filename) ] # List of the rules that match
         if len(matches) > 0:
             return ','.join(matches)

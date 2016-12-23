@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
             # Starting workers
             #Portable Executables
-            for i in range(nr_processes):
+            for i in range(4):
                 p = PEWorker(pe_queue, dist_queue)
                 p.daemon = True
                 p.start()
