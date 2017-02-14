@@ -9,6 +9,8 @@ A few examples where it can be used for:
 - Gather intell of large open source malware repositories (original intend of the project)
 - Visualize the results that are stored in the Mongo DB by exporting them to Splunk (http://splunk.com). Exclude the strings field tho if you are using the free version!
 
+For more information, check out the [Wiki](https://github.com/nheijmans/malzoo/wiki/Welcome-to-the-MalZoo-wiki!) of this repository. 
+
 ##Information collected
 See the wiki page [Information collected](https://github.com/nheijmans/MalZoo/wiki/Collected-data) which data is collected for which sample.
 
