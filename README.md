@@ -1,3 +1,4 @@
+![Logo](https://cloud.githubusercontent.com/assets/7534191/22924310/eb6d8948-f2a4-11e6-98f6-61125f34f075.png)
 #What is MalZoo?
 MalZoo is a mass static malware analysis tool that collects the information in a Mongo database
 and moves the malware samples to a repository directory based on the first 4 chars of the MD5 hash.
