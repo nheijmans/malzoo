@@ -7,7 +7,7 @@ It was build as a internship project to analyze sample sets of 50 G.B.+ (e.g. fr
 A few examples where it can be used for:
 - Use the collected information to visualize the results (e.g. see most used compile languages, packers etc.)
 - Gather intell of large open source malware repositories (original intend of the project)
-- Visualize the results that are stored in the Mongo DB by exporting them to Splunk (http://splunk.com). Exclude the strings field tho if you are using the free version!
+- Monitor a mailbox, analyze the emails and attachments
 
 For more information, check out the [Wiki](https://github.com/nheijmans/malzoo/wiki/Welcome-to-the-MalZoo-wiki!) of this repository. 
 
