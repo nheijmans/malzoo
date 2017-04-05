@@ -50,3 +50,28 @@ rule image_gif {
     condition:
         $magic at 0
 }
+
+rule office_docs {
+    meta:
+        description = "Identification of Office files"
+        author = "nheijmans"
+
+    strings:
+        $d2003 = { D0 CF 11 E0 A1 B1 1A E1 }
+        $d2007 = { 50 4B 03 04 14 00 06 00 }
+
+    condition:
+        $d2003 or $d2007
+}
+
+rule executable {
+    meta:
+        description = "Identification of Office files"
+        author = "nheijmans"
+
+    strings:
+        $mz = { 4D 5A }
+
+    condition:
+        $mz at 0
+}

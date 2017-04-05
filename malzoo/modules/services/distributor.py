@@ -49,15 +49,16 @@ class DistributeBot(Distributor):
                     if self.conf.getboolean('cuckoo','enabled') and ft[0:11] != 'Zip archive':
                         cuckoo.submit(package)
 
-                    match = yarasigs.scan(sample['filename'])
+                    match = yarasigs.scan(sample['filename'], rule='filetypes.yara')
                     #Determine to which worker the file is assigned based on the mime
-                    if ft[0:35] == 'Composite Document File V2 Document':
+                    if match == 'office_docs':
                         self.doc_q.put(sample)
                         result = {'result':'success'}
-                    elif ft[0:4] == 'PE32':
+                    elif match == 'executable':
+                        print 'got a match'
                         self.pe_q.put(sample)
                         result = {'result':'success'}
-                    elif ft[0:11] == 'Zip archive' and match != 'java_archive':
+                    elif ft == 'application/zip' and match != 'java_archive':
                         self.zip_q.put(sample)
                         result = {'result':'success'}
                     else:

@@ -40,10 +40,11 @@ class CuckooService(Service):
             response = requests.post(url, files=files)
             response = json.dumps(response.text)
             response = json.loads(response)
-            return response
         except requests.ConnectionError:
-            return {'error':
+            response = {'error':
                     'Unable to connect to Cuckoo API at "{0}".'.format(url)}
+        finally:
+            return response
 
 class ViperService(Service):
     def search(self, sample):
@@ -55,12 +56,14 @@ class ViperService(Service):
             response = json.dumps(response.text)
             response = json.loads(response)
             if '../' in response:
-                return False
+                reply = False
             else:
-                return True
+                reply = True
         except requests.ConnectionError:
-            return {'error':
+            reply =  {'error':
                     'Unable to connect to Viper API at "{0}".'.format(url)}
+        finally:
+            return reply
 
     def submit(self, sample):
         url     = 'http://{0}:{1}/file/add'.format(self.conf.get('viper','host'), 
@@ -71,7 +74,8 @@ class ViperService(Service):
             response = requests.post(url, files=files, data=payload)
             response = json.dumps(response.text)
             response = json.loads(response)
-            return response
         except requests.ConnectionError:
-            return {'error':
+            response =  {'error':
                     'Unable to connect to Viper API at "{0}".'.format(url)}
+        finally:
+            return response

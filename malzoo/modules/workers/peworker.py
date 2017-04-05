@@ -34,30 +34,29 @@ class PEWorker(Worker):
             else:
                 strings_sample = "Packer detected"
     
-            if  ft[0:4] == 'PE32':
-                # Creating a dictionary with sample information
-                sample_info = { 
-                'filename'          : general_info.get_filename(),
-                'filetype'          : general_info.get_filetype(),
-                'filesize'          : str(general_info.get_filesize()),
-                'md5'               : hasher.get_md5(),
-                'sha1'              : hasher.get_sha1(),
-                'pehash'            : hasher.get_pehash(),
-                'imphash'           : hasher.get_imphash(),
-                'fuzzy'             : hasher.get_fuzzy(),
-                'yara_results'      : sigs_yara.scan(sample),
-                'pe_compiletime'    : pe_info.get_compiletime(),
-                'pe_dll'            : pe_info.get_dll(),
-                'pe_packer'         : pe_info.packer_detect(),
-                'pe_language'       : pe_info.get_language(),
-                'original_filename' : pe_info.get_org_filename(),
-                'submit_date'       : int(time()),
-                'sample_type'       : 'exe',
-                'id_tag'            : tag
-                }
+            # Creating a dictionary with sample information
+            sample_info = { 
+            'filename'          : general_info.get_filename(),
+            'filetype'          : general_info.get_filetype(),
+            'filesize'          : str(general_info.get_filesize()),
+            'md5'               : hasher.get_md5(),
+            'sha1'              : hasher.get_sha1(),
+            'pehash'            : hasher.get_pehash(),
+            'imphash'           : hasher.get_imphash(),
+            'fuzzy'             : hasher.get_fuzzy(),
+            'yara_results'      : sigs_yara.scan(sample),
+            'pe_compiletime'    : pe_info.get_compiletime(),
+            'pe_dll'            : pe_info.get_dll(),
+            'pe_packer'         : pe_info.packer_detect(),
+            'pe_language'       : pe_info.get_language(),
+            'original_filename' : pe_info.get_org_filename(),
+            'submit_date'       : int(time()),
+            'sample_type'       : 'exe',
+            'id_tag'            : tag
+            }
     
-                self.share_data(sample_info)
-                self.store_sample(sample)
+            self.share_data(sample_info)
+            self.store_sample(sample)
         except Exception, e:
             print "Error on sample:",sample,e
         finally:
