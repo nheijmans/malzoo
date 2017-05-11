@@ -6,9 +6,7 @@ analysis.
 
 """
 import simpleldap
-import sys
 import json
-import pprint
 from ConfigParser import SafeConfigParser
 
 class ActiveDirectory:

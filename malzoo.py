@@ -36,6 +36,7 @@ from malzoo.modules.services.distributor   import DistributeBot
 
 #Tools
 from malzoo.modules.tools.signatures       import Signatures
+from malzoo.modules.tools.logger           import setup_logger
 
 # Argument definition
 parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis', version='Malzoo-v2.0')
@@ -71,6 +72,9 @@ if __name__ == '__main__':
             workers   = []
             services  = []
 
+            a_logger = setup_logger('analysis','logs/analysis_results.log')
+            d_logger = setup_logger('debug','logs/debug.log')
+
             # Starting suppliers, if enabled in the configuration file
             if conf.getboolean('suppliers','api'):
                 print "[+] Starting API supplier!"
@@ -89,11 +93,10 @@ if __name__ == '__main__':
 
             if conf.getboolean('suppliers','dir'):
                 print "[+] Starting Directory monitor!"
-                monitor = Monitor(dist_queue)
-                dp = Process(target=monitor.directory, args=(conf.get('settings','dirmonitor'),))
-                dp.daemon = True
-                dp.start()
-                suppliers.append(dp)
+                monitor = Monitor(conf.get('settings','dirmonitor'),dist_queue)
+                monitor.daemon = True
+                monitor.run()
+                suppliers.append(monitor)
 
             # Starting workers
             #Portable Executables

@@ -6,13 +6,17 @@ The parent class Worker.
 from time               import sleep, time
 from ConfigParser       import SafeConfigParser
 from multiprocessing    import Process
+import  logging
 
 #MalZoo imports
 from malzoo.modules.tools.database import MongoDatabase
 from malzoo.modules.tools.storager import add_to_repository
+from malzoo.modules.tools.logger   import dbg_logger
+from malzoo.modules.tools.logger   import add_data as txtlog
 from malzoo.modules.tools.splunk   import add_data as splunkie
 from malzoo.modules.tools.es       import add_data as elastic
 from malzoo.modules.tools.hashes   import Hasher
+
 
 class Worker(Process):
     def __init__(self, sample_q, dist_q):
@@ -33,6 +37,9 @@ class Worker(Process):
             mongodb.add_sample(data)
         if self.conf.getboolean('elasticsearch','enabled'):
             elastic(data)
+        if self.conf.getboolean('settings','textlog'):
+            txtlog(data)
+
         return
 
     def store_sample(self, sample):
@@ -40,8 +47,10 @@ class Worker(Process):
             add_to_repository(sample)
         return
 
-    def services(self, sample):
-        self.dist_q.put(sample)
+    def log(self, data):
+        if self.conf.getboolean('settings','debug'):
+            dbg_logger(data)
+        return
 
     def run(self):
         while True:
@@ -55,12 +64,13 @@ class Worker(Process):
                 self.process(sample, tag)
 
 class Supplier(Process):
-    def __init__(self, sample_q):
+    def __init__(self):
         super(Supplier, self).__init__()
-        self.sample_q = sample_q
 
-    def supply(self, sample):
-        pass
+    def log(self,data):
+        if self.conf.getboolean('settings','debug'):
+            dbg_logger(data)
+        return
 
 class Distributor(Process):
     def __init__(self,dist_q,pe_q,doc_q,zip_q,other_q):
@@ -78,6 +88,11 @@ class Distributor(Process):
 
     def distribute(self):
         pass
+
+    def log(self,data):
+        if self.conf.getboolean('settings','debug'):
+            dbg_logger(data)
+        return
 
     def run(self):
         while True:

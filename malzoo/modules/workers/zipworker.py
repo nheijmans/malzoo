@@ -46,7 +46,7 @@ class ZipWorker(Worker):
             self.share_data(sample_info)
             self.store_sample(sample)
         except Exception as e:
-            print "ZipWorker: Error on sample", e
+            self.log('zipworker - '+str(e))
         finally:
             return
 

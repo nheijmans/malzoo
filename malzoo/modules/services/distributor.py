@@ -55,7 +55,6 @@ class DistributeBot(Distributor):
                         self.doc_q.put(sample)
                         result = {'result':'success'}
                     elif match == 'executable':
-                        print 'got a match'
                         self.pe_q.put(sample)
                         result = {'result':'success'}
                     elif ft == 'application/zip' and match != 'java_archive':
@@ -69,5 +68,5 @@ class DistributeBot(Distributor):
             else:
                 return {'error':'No md5 given'}
         else:
-            print filename, "is in the unwanted yara rule"
+            self.log('distributor - {0} - matched with yara unwanted signature'.format(filename)
             return

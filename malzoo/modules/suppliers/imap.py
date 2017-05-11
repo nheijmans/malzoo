@@ -11,10 +11,12 @@ import time
 import email
 import imaplib
 import ConfigParser
-
 from multiprocessing import Process, Queue
 
-class Imap:
+#Parent
+from malzoo.common.abstract import Supplier
+
+class Imap(Supplier):
     def open_connection(self, verbose=False):
         """
         Setup the IMAP connection with the server
@@ -22,13 +24,15 @@ class Imap:
         """
         # Connect to the server
         hostname = self.conf.get('imap', 'server')
-        if verbose: print 'Connecting to', hostname
+        if verbose:
+            self.log('{0} - {1} - {2} '.format('imapsupplier','open_connect','trying to connect'))
         connection = imaplib.IMAP4_SSL(hostname)
     
         # Login to our account
         username = self.conf.get('imap', 'username')
         password = self.conf.get('imap', 'password')
-        if verbose: print 'Logging in as', username
+        if verbose: 
+            self.log('{0} - {1} - {2} '.format('imapsupplier','open_connect','trying to connect'))
         connection.login(username, password)
         return connection
     
@@ -38,7 +42,7 @@ class Imap:
             c = self.c
             response_code, data = c.list()
         except Exception as e:
-            print e
+            self.log('{0} - {1} - {2} '.format('imapsupplier','list_mailboxes',e))
         finally:
             return data
     
@@ -53,7 +57,7 @@ class Imap:
             num_msgs = int(data[0])
             response, msg_ids = c.search(None, '(UNSEEN)')
         except Exception as e:
-            print e
+            self.log('{0} - {1} - {2} '.format('imapsupplier','get_ids',e))
         finally:
             return msg_ids
     
@@ -67,7 +71,7 @@ class Imap:
             response, messages = c.fetch(batch_ids,"(RFC822)")
         except Exception as e:
             messages = None
-            print e
+            self.log('{0} - {1} - {2} '.format('imapsupplier','fetch_mail',e))
         finally:
             return messages
     
@@ -108,8 +112,7 @@ class Imap:
                 self.c = self.open_connection()
                 connected = True
             except Exception as e:
-                print time.localtime(), "Can't connect!"
-                print e
+                self.log('{0} - {1} - {2} '.format('imapsupplier','run',e))
                 connected = False
             
             if connected:
@@ -125,7 +128,7 @@ class Imap:
                                 email = {'filename':emails[i][1],'tag':self.conf.get('settings','tag')}
                                 mail_q.put(email)
                         else:
-                            print "Emails could not be fetched"
+                            self.log('{0} - {1} - {2} '.format('imapsupplier','run','no emails'))
     
             # 4. Check again in 10 seconds
                     self.c.close()

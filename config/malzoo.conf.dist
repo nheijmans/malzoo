@@ -1,26 +1,27 @@
-# Default settings
+# default settings
 [settings]
-# How many workers should be started
+# how many workers should be started
 nr_workers  = 1
-# The default tag given to samples
+# the default tag given to samples
 tag         = malzoo
 # the whitelist of file extensions
 whitelist   = jpg,png,txt,gif,jpeg
-# Locations of the files for the YARA rules and packer signatures
+# locations of the files for the YARA rules and packer signatures
 yara_rules  = data/yara_rules/
 userdb      = data/userdb.txt
-#Logging of events settings
-logging     = no
-logdir      = log/
-#Storage of samples
+# log results to text file
+text_log    = no
+# storage of samples
 storesample = no
 repository  = storage/
-# Monitoring location
+# monitoring location
 dirmonitor  = monitored/
-# Which platform should be used to see if the sample is already in the database.
+# which platform should be used to see if the sample is already in the database.
 # options are: mongo or viper. If empty, Malzoo won't check if the file is already analyzed
 # and will submit the file for analysis. Default is mongo.
 duplicatecheck = 
+# enable debugging
+debug = no
 
 # Components
 # Enable/disable the sample suppliers that should be started

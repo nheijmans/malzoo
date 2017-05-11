@@ -48,7 +48,7 @@ git clone https://github.com/nheijmans/malzoo.git
 cd malzoo
 sudo pip install -r requirements.txt -U
 cp config/malzoo.conf.dist config/malzoo.conf
-mkdir attachments storage uploads
+mkdir attachments storage uploads logs
 cd $HOME
 rm -r master.zip pydeep-master ssdeep-2.13 ssdeep.tar.gz v3.5.0.tar.gz yara-3.5.0
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH

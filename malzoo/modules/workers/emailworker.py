@@ -29,7 +29,6 @@ from malzoo.modules.tools.emailtoolkit     import EmailToolkit
 from malzoo.modules.tools.urlextractor     import get_urls
 
 class EmailWorker(Worker):
-
     def ad_request(self, fromaddr, toaddr):
         """
         Uses the tool module activedirectory to get the reporters location 
@@ -47,7 +46,7 @@ class EmailWorker(Worker):
             else:
                 adresults = (None, None)
         except Exception as e:
-            print "Emailworker: AD request error", e
+            self.log('{0} - {1} - {2} '.format('emailworker','ad_request',e))
             adresults = (None, None)
         finally:
             return adresults
@@ -104,7 +103,6 @@ class EmailWorker(Worker):
             else:
                 for obj in attachments:
                     content_type = obj.get_content_type() 
-                    print content_type
                     filename     = obj.get_filename()
     
                     #If the filename is set, write the attachment to a subfolder
@@ -159,6 +157,6 @@ class EmailWorker(Worker):
                             url_info['sample_type'] = 'url'
                             self.share_data(url_info)
         except Exception, e:
-            print "Emailworker: Error on sample:",sample,e,"\n"
+            self.log('{0} - {1} - {2} '.format('emailworker',sample,e))
         finally:
             return

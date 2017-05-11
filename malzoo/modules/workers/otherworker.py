@@ -38,7 +38,7 @@ class OtherWorker(Worker):
             self.share_data(sample_info)
             self.store_sample(sample)
         except Exception, e:
-            print 'Error on',sample,e
+            self.log('{0} - {1} - {2} '.format('otherworker',sample,e))
         finally:
             return
 
