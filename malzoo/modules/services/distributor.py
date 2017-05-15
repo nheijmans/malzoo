@@ -68,5 +68,5 @@ class DistributeBot(Distributor):
             else:
                 return {'error':'No md5 given'}
         else:
-            self.log('distributor - {0} - matched with yara unwanted signature'.format(filename)
+            self.log('distributor - {0} - matched with yara unwanted signature'.format(filename))
             return
