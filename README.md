@@ -26,5 +26,8 @@ See this [Wiki page](https://github.com/nheijmans/MalZoo/wiki/Installation-and-c
 Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automate malware analyse by this project.
 Also a big thanks to all the developers of the modules and software used and making it available for everyone to use.
 
+# Donate
+If you would like to buy a beer for the work on malzoo, please use the bitcoin address `16cSpubs7iA3XnBBdoHQkctfTxGrfnmYv` and I will bring out a toast for your donation :)
+
 # License
 This project is released under the GPL 2.0 License. See the LICENSE for details.
