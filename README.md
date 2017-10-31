@@ -10,6 +10,12 @@ A few examples where it can be used for:
 
 For more information, check out the [Wiki](https://github.com/nheijmans/malzoo/wiki/Welcome-to-the-MalZoo-wiki!) of this repository. 
 
+## Currently working on:
+1. improved logging
+2. custom module processing
+3. bug fixes
+4. documentation
+
 ## Information collected
 See the wiki page [Information collected](https://github.com/nheijmans/MalZoo/wiki/Collected-data) which data is collected for which sample.
 
