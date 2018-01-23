@@ -10,7 +10,7 @@ whitelist   = jpg,png,txt,gif,jpeg
 yara_rules  = data/yara_rules/
 userdb      = data/userdb.txt
 # log results to text file
-text_log    = no
+textlog    = no
 # storage of samples
 storesample = no
 repository  = storage/
