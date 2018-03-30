@@ -1,4 +1,5 @@
 config/malzoo.conf
+*.swp
 *.pyc
 uploads/*
 attachments/*
