@@ -12,28 +12,28 @@ import magic
 
 #Malzoo imports
 from time import time
-from malzoo.modules.tools.general_info import GeneralInformation
-from malzoo.modules.tools.signatures   import Signatures
-from malzoo.modules.tools.hashes       import Hasher
+from malzoo.core.tools.general_info import GeneralInformation
+from malzoo.core.tools.signatures   import Signatures
+from malzoo.core.tools.hashes       import Hasher
 
 class OtherWorker(Worker):
-    def process(self, sample, tag):
+    def process(self, sample):
         try:
-            hasher       = Hasher(sample)
-            general_info = GeneralInformation(sample)
+            hasher       = Hasher(sample['filename'])
+            general_info = GeneralInformation(sample['filename'])
             sigs_yara    = Signatures()
             mymagic      = magic.Magic(mime=True)
 
             sample_info = { 
             'filename'          : general_info.get_filename(),
-            'filetype'          : mymagic.from_file(sample),
+            'filetype'          : mymagic.from_file(sample['filename']),
             'filesize'          : str(general_info.get_filesize()),
             'md5'               : hasher.get_md5(),
             'sha1'              : hasher.get_sha1(),
-            'yara_results'      : sigs_yara.scan(sample),
+            'yara_results'      : sigs_yara.scan(sample['filename']),
             'submit_date'       : int(time()),
             'sample_type'       : 'other',
-            'id_tag'            : tag
+            'id_tag'            : sample['tag']
             } 
             self.share_data(sample_info)
             self.store_sample(sample)

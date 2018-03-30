@@ -1,12 +1,11 @@
 #!/usr/bin/python
 """
-MalZoo is a mass malware repository script that is connected to a Mongo database
-to store information of malware samples. With the information collected by 
-MalZoo you can search for related malware and see trends in your malware 
-collection as you grow your zoo. 
+MalZoo is a mass malware repository script to collect & store information of malware samples. 
+With the information collected by MalZoo you can search for related malware and see trends in 
+your malware collection as you grow your zoo. 
 
-Date: 19/07/2016
-Version: 2.0
+Date: 19/03/2018
+Version: 2.1
 Author: Niels Heijmans
 License: GPL 2.0
 
@@ -20,23 +19,24 @@ from ConfigParser                          import SafeConfigParser
 from multiprocessing                       import Process, Queue
 
 #Suppliers of samples
-from malzoo.modules.suppliers.monitor      import Monitor
-from malzoo.modules.suppliers.imap         import Imap
-from malzoo.modules.suppliers.api          import WebApi
+from malzoo.core.suppliers.monitor      import Monitor
+from malzoo.core.suppliers.imap         import Imap
+from malzoo.core.suppliers.api          import WebApi
 
 #Sample workers
-from malzoo.modules.workers.emailworker    import EmailWorker
-from malzoo.modules.workers.otherworker    import OtherWorker
-from malzoo.modules.workers.docworker      import OfficeWorker
-from malzoo.modules.workers.zipworker      import ZipWorker
-from malzoo.modules.workers.peworker       import PEWorker
+from malzoo.core.workers.moduleworker   import ModuleWorker
+from malzoo.core.workers.emailworker    import EmailWorker
+from malzoo.core.workers.otherworker    import OtherWorker
+from malzoo.core.workers.docworker      import OfficeWorker
+from malzoo.core.workers.zipworker      import ZipWorker
+from malzoo.core.workers.peworker       import PEWorker
 
 #Services
-from malzoo.modules.services.distributor   import DistributeBot
+from malzoo.core.services.distributor   import DistributeBot
 
 #Tools
-from malzoo.modules.tools.signatures       import Signatures
-from malzoo.modules.tools.logger           import setup_logger
+from malzoo.core.tools.signatures       import Signatures
+from malzoo.core.tools.logger           import setup_logger
 
 # Argument definition
 parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis', version='Malzoo-v2.0')
@@ -52,6 +52,7 @@ if __name__ == '__main__':
     options      = parser.parse_args()
     pe_queue     = Queue()
     doc_queue    = Queue()
+    mod_queue    = Queue()
     zip_queue    = Queue()
     dist_queue   = Queue()
     mail_queue   = Queue()
@@ -66,7 +67,7 @@ if __name__ == '__main__':
         print "[+] Done!"
     else:
         try:
-            print "[*] Malzoo wil run in monitor mode now!" 
+            print "[*] Malzoo runs in monitor mode now!" 
             print "[*] Starting components..."
             suppliers = []
             workers   = []
@@ -134,9 +135,16 @@ if __name__ == '__main__':
                 p.start()
                 workers.append(p)
 
+            #Module
+            for i in range(nr_processes):
+                p = ModuleWorker(mod_queue, dist_queue)
+                p.daemon = True
+                p.start()
+                workers.append(p)
+
             #Starting Distributor
             for i in range(3):
-                d = DistributeBot(dist_queue, pe_queue, doc_queue, zip_queue, other_queue)
+                d = DistributeBot(dist_queue, pe_queue, doc_queue, zip_queue, other_queue, mod_queue)
                 d.daemon = True
                 d.start()
                 services.append(d)
@@ -144,13 +152,14 @@ if __name__ == '__main__':
             for supplier in suppliers:
                 supplier.join()
 
-        except KeyboardInterrupt:
+        except Exception as e: 
             for worker in workers:
                 worker.terminate()
             for supplier in suppliers:
                 supplier.terminate()
             for service in services:
                 service.terminate()
+            print e
             print "[*] Thanks for using MalZoo!"
 
         finally:

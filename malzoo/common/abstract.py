@@ -6,16 +6,17 @@ The parent class Worker.
 from time               import sleep, time
 from ConfigParser       import SafeConfigParser
 from multiprocessing    import Process
+from threading          import Thread
 import  logging
 
 #MalZoo imports
-from malzoo.modules.tools.database import MongoDatabase
-from malzoo.modules.tools.storager import add_to_repository
-from malzoo.modules.tools.logger   import dbg_logger
-from malzoo.modules.tools.logger   import add_data as txtlog
-from malzoo.modules.tools.splunk   import add_data as splunkie
-from malzoo.modules.tools.es       import add_data as elastic
-from malzoo.modules.tools.hashes   import Hasher
+from malzoo.core.tools.database import MongoDatabase
+from malzoo.core.tools.storager import add_to_repository
+from malzoo.core.tools.logger   import dbg_logger
+from malzoo.core.tools.logger   import add_data as txtlog
+from malzoo.core.tools.splunk   import add_data as splunkie
+from malzoo.core.tools.es       import add_data as elastic
+from malzoo.core.tools.hashes   import Hasher
 
 
 class Worker(Process):
@@ -57,11 +58,8 @@ class Worker(Process):
             if self.sample_q.empty():
                 sleep(5)
             else:
-                sampleq     = self.sample_q.get()
-                sample      = sampleq['filename']
-                tag         = sampleq['tag']
-
-                self.process(sample, tag)
+                sample = self.sample_q.get()
+                self.process(sample)
 
 class Supplier(Process):
     def __init__(self):
@@ -73,7 +71,7 @@ class Supplier(Process):
         return
 
 class Distributor(Process):
-    def __init__(self,dist_q,pe_q,doc_q,zip_q,other_q):
+    def __init__(self,dist_q,pe_q,doc_q,zip_q,other_q,mod_q):
         super(Distributor, self).__init__()
         #Configuration file
         self.conf = SafeConfigParser()
@@ -84,6 +82,7 @@ class Distributor(Process):
         self.dist_q  = dist_q
         self.doc_q   = doc_q
         self.zip_q   = zip_q
+        self.mod_q   = mod_q
         self.pe_q    = pe_q
 
     def distribute(self):
@@ -126,4 +125,30 @@ class Tool(object):
         self.conf.read('config/malzoo.conf')
 
     def use(self):
+        pass
+
+class CustomModule(Thread):
+    def __init__(self, package):
+        super(CustomModule, self).__init__()
+        self.pkg = package
+        self.conf = SafeConfigParser()
+        self.conf.read('config/malzoo.conf')
+
+    def log(self, data):
+        if self.conf.getboolean('settings','debug'):
+            dbg_logger(data)
+        return
+
+    def share_data(self, data):
+        mongodb  = MongoDatabase()
+        if self.conf.getboolean('splunk','enabled'):
+            splunkie(data)
+        if self.conf.getboolean('mongo','enabled'):
+            mongodb.add_sample(data)
+        if self.conf.getboolean('elasticsearch','enabled'):
+            elastic(data)
+        if self.conf.getboolean('settings','textlog'):
+            txtlog(data)
+
+    def run():
         pass

@@ -8,18 +8,17 @@ In the future it will also make sure the samples are distributed to the corect
 worker and workers are being started according to the amount of samples.
 """
 
-from malzoo.common.abstract              import Distributor
-from malzoo.modules.services.apis        import *
-from malzoo.modules.tools.general_info   import GeneralInformation
-from malzoo.modules.tools.database       import MongoDatabase
-from malzoo.modules.tools.signatures	 import Signatures
+from malzoo.common.abstract           import Distributor
+from malzoo.core.services.apis        import *
+from malzoo.core.tools.general_info   import GeneralInformation
+from malzoo.core.tools.database       import MongoDatabase
+from malzoo.core.tools.signatures     import Signatures
 
 class DistributeBot(Distributor):
     """
     The distributeBot wants to receive the following info in a dict: md5, file(path), tag
     """
     def distribute(self,sample):
-        cuckoo    = CuckooService()
         viper     = ViperService()
         mongodb   = MongoDatabase()
         filename  = sample['filename']
@@ -36,37 +35,31 @@ class DistributeBot(Distributor):
                     known = False
                 
                 if known:
-                    return {'response':'known'}
+                    self.log('distributor - {0} - already in db'.format(sample['md5']))
                 else:
                     general_info = GeneralInformation(sample['filename'])
                     ft           = general_info.get_filetype()
 
-                    #Create a package that can be used to push sample to
-                    #cuckoo and viper. push only if enabled in the config
                     package = {'tags':sample['tag'],'file':sample['filename']}
                     if self.conf.getboolean('viper','enabled'):
                         viper.submit(package)
-                    if self.conf.getboolean('cuckoo','enabled') and ft[0:11] != 'Zip archive':
-                        cuckoo.submit(package)
 
+                    #determine to which worker the file is assigned based on the mime
                     match = yarasigs.scan(sample['filename'], rule='filetypes.yara')
-                    #Determine to which worker the file is assigned based on the mime
                     if match == 'office_docs':
                         self.doc_q.put(sample)
-                        result = {'result':'success'}
                     elif match == 'executable':
                         self.pe_q.put(sample)
-                        result = {'result':'success'}
                     elif ft == 'application/zip' and match != 'java_archive':
                         self.zip_q.put(sample)
-                        result = {'result':'success'}
                     else:
                         self.other_q.put(sample)
-                        result = {'result':'success'}
 
-                    return result
+                    #add the package to the modules for custom operations
+                    self.mod_q.put(sample)
             else:
-                return {'error':'No md5 given'}
+                self.log('distributor - {0} - no md5 given'.format(filename))
         else:
             self.log('distributor - {0} - matched with yara unwanted signature'.format(filename))
-            return
+
+        return

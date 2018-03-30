@@ -17,7 +17,7 @@ from os.path      import isfile
 from os.path      import isdir
 
 # malzoo imports
-from malzoo.modules.tools.hashes       import Hasher
+from malzoo.core.tools.hashes       import Hasher
 
 class Monitor(Supplier):
     def __init__(self, path, dist_q):

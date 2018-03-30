@@ -14,7 +14,7 @@ from time                           import sleep,time
 from oletools.olevba                import VBA_Parser, VBA_Scanner
 
 #Malzoo imports
-from malzoo.modules.tools.hashes    import Hasher
+from malzoo.core.tools.hashes    import Hasher
 
 class OfficeWorker(Worker):
     def identify_sample(self, oid):
@@ -39,18 +39,18 @@ class OfficeWorker(Worker):
     
         return macro_info
     
-    def process(self, sample, tag):
+    def process(self, sample):
         try:
-            hashbot      = Hasher(sample)
+            hashbot      = Hasher(sample['filename'])
             mymagic      = magic.Magic(mime=True)
-            sample_info  = self.identify_sample(oletools.oleid.OleID(sample))
-            vba          = VBA_Parser(sample)
+            sample_info  = self.identify_sample(oletools.oleid.OleID(sample['filename']))
+            vba          = VBA_Parser(sample['filename'])
     
             # Extend the results of sample_info with extra data and add to Splunk
             sample_info['submit_date']   = int(time())
-            sample_info['filetype']      = mymagic.from_file(sample)
+            sample_info['filetype']      = mymagic.from_file(sample['filename'])
             sample_info['sample_type']   = 'office'
-            sample_info['id_tag']        = tag
+            sample_info['id_tag']        = sample['tag']
             sample_info['sha1']          = hashbot.get_sha1()
             sample_info['md5']           = hashbot.get_md5()
             indicators                   = dict()
@@ -69,7 +69,7 @@ class OfficeWorker(Worker):
 
             sample_info['indicators'] = indicators
             self.share_data(sample_info)
-            self.store_sample(sample)
+            self.store_sample(sample['filename'])
         except Exception, e:
             self.log('{0} - {1} - {2} '.format('docworker',sample,e))
         finally:

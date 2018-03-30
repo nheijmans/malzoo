@@ -11,20 +11,20 @@ from time import time
 import zipfile
 
 #Malzoo imports
-from malzoo.modules.tools.saveobject import SaveObject
-from malzoo.modules.tools.hashes       import Hasher
-from malzoo.modules.tools.general_info import GeneralInformation
+from malzoo.core.tools.saveobject import SaveObject
+from malzoo.core.tools.hashes       import Hasher
+from malzoo.core.tools.general_info import GeneralInformation
 
 class ZipWorker(Worker):
-    def process(self, sample, tag, pwd=None):
+    def process(self, sample, pwd=None):
         try:
             if zipfile.is_zipfile(sample):
-                zf = zipfile.ZipFile(sample, 'r')
+                zf = zipfile.ZipFile(sample['filename'], 'r')
             else:
                 return
 
-            hasher  = Hasher(sample)
-            general_info = GeneralInformation(sample)
+            hasher  = Hasher(sample['filename'])
+            general_info = GeneralInformation(sample['filename'])
             saveobj = SaveObject()
             zfiles = zf.namelist()
             zippedfiles = []
@@ -44,9 +44,9 @@ class ZipWorker(Worker):
             sample_info['submit_date'] = int(time())
 
             self.share_data(sample_info)
-            self.store_sample(sample)
+            self.store_sample(sample['filename'])
         except Exception as e:
-            self.log('zipworker - '+str(e))
+            self.log('zipworker - process  - '+str(e))
         finally:
             return
 

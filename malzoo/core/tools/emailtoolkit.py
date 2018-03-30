@@ -9,7 +9,7 @@ import email
 import re
 from email.parser import HeaderParser
 from email.header import decode_header
-from malzoo.modules.tools.saveobject import SaveObject
+from malzoo.core.tools.saveobject import SaveObject
 
 class EmailToolkit:
     def fwd_parser(self, subject, text):

@@ -23,34 +23,12 @@ from hashlib import sha1 as sha1sum
 from time import time
 
 #Malzoo imports
-from malzoo.modules.tools.hashes           import Hasher
-from malzoo.modules.tools.activedirectory  import ActiveDirectory
-from malzoo.modules.tools.emailtoolkit     import EmailToolkit
-from malzoo.modules.tools.urlextractor     import get_urls
+from malzoo.core.tools.hashes           import Hasher
+from malzoo.core.tools.activedirectory  import ActiveDirectory
+from malzoo.core.tools.emailtoolkit     import EmailToolkit
+from malzoo.core.tools.urlextractor     import get_urls
 
 class EmailWorker(Worker):
-    def ad_request(self, fromaddr, toaddr):
-        """
-        Uses the tool module activedirectory to get the reporters location 
-        based on a search in the AD
-        """
-        ad = ActiveDirectory()
-        try:
-            REGEX = self.conf.get('workers','email_regex')
-            mboxname = self.conf.get('workers','emailaddr')
-            if fromaddr != None and fromaddr != mboxname and re.match(REGEX, fromaddr.lower()):
-                re.match(REGEX, fromaddr)
-                adresults = ad.search('mail',fromaddr)
-            elif toaddr != None and toaddr != mboxname and re.match(REGEX, toaddr.lower()):
-                adresults = ad.search('mail',toaddr)
-            else:
-                adresults = (None, None)
-        except Exception as e:
-            self.log('{0} - {1} - {2} '.format('emailworker','ad_request',e))
-            adresults = (None, None)
-        finally:
-            return adresults
-
     def process(self, Email, tag):
         """ 
         Parse each email and extract attachment(s) 
@@ -81,12 +59,6 @@ class EmailWorker(Worker):
                 mail_info['attachments'] = has_attachments
                 mail_info['submit_date'] = int(time())
                 mail_info['sample_type'] = 'email'
-
-                if self.conf.getboolean('ad','adlookup'):
-                    adresults = self.ad_request(mail_info['from'], mail_info['to'])
-                    mail_info['department']    = adresults[0]
-                    mail_info['country_code']  = adresults[1]
-
                 self.share_data(mail_info)
 
                 #Check the body for links
@@ -139,14 +111,6 @@ class EmailWorker(Worker):
                     mail_info['attachments'] = has_attachments
                     mail_info['submit_date'] = int(time())
                     mail_info['sample_type'] = 'email'
-
-                    # !!! EXPERIMENTAL !!!
-                    if self.conf.getboolean('ad','adlookup'):
-                        adresults = self.ad_request(mail_info['from'], mail_info['to'])    
-                        mail_info['department']   = adresults[0]
-                        mail_info['country_code'] = adresults[1]
-                        mail_info['sample_type']      = 'email'
-
                     self.share_data(mail_info)
 
                     if urls != None:

@@ -31,21 +31,6 @@ class MalzooService(Service):
             return{'error':
                     'Unable to connect to MalZoo API at "{0}".'.format(url)}
 
-class CuckooService(Service):
-    def submit(self, data):
-        url   = 'http://{0}:{1}/tasks/create/file'.format(self.conf.get('cuckoo','host'), 
-                                                self.conf.get('cuckoo','port'))
-        try:
-            files = dict(file=open(data['file'], 'rb'))
-            response = requests.post(url, files=files)
-            response = json.dumps(response.text)
-            response = json.loads(response)
-        except requests.ConnectionError:
-            response = {'error':
-                    'Unable to connect to Cuckoo API at "{0}".'.format(url)}
-        finally:
-            return response
-
 class ViperService(Service):
     def search(self, sample):
         url     = 'http://{0}:{1}/file/find'.format(self.conf.get('viper','host'), 

@@ -16,8 +16,8 @@ from zipfile import ZipFile
 from ConfigParser import SafeConfigParser
 
 #Malzoo imports
-from malzoo.modules.tools.general_info import GeneralInformation
-from malzoo.modules.tools.hashes       import Hasher
+from malzoo.core.tools.general_info import GeneralInformation
+from malzoo.core.tools.hashes       import Hasher
 
 def WebApi(dist_q):
     def jsonize(data):
