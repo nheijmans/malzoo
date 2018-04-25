@@ -29,7 +29,7 @@ from malzoo.core.tools.emailtoolkit     import EmailToolkit
 from malzoo.core.tools.urlextractor     import get_urls
 
 class EmailWorker(Worker):
-    def process(self, Email, tag):
+    def process(self, Email, tag="api"):
         """ 
         Parse each email and extract attachment(s) 
         """
