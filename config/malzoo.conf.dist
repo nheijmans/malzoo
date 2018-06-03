@@ -1,27 +1,20 @@
 # default settings
 [settings]
-# how many workers should be started
-nr_workers  = 1
-# the default tag given to samples
+debug       = yes
+textlog     = yes
+storesample = yes
 tag         = malzoo
-# the whitelist of file extensions
-whitelist   = jpg,png,txt,gif,jpeg
-# locations of the files for the YARA rules and packer signatures
+repository  = storage/
+dirmonitor  = monitored
+nr_workers  = 1
 yara_rules  = data/yara_rules/
 userdb      = data/userdb.txt
-# log results to text file
-textlog    = no
-# storage of samples
-storesample = no
-repository  = storage/
-# monitoring location
-dirmonitor  = monitored/
+whitelist   = jpg,png,txt,gif,jpeg
+ 
 # which platform should be used to see if the sample is already in the database.
 # options are: mongo or viper. If empty, Malzoo won't check if the file is already analyzed
-# and will submit the file for analysis. Default is mongo.
+# and will submit the file for analysis. 
 duplicatecheck = 
-# enable debugging
-debug = no
 
 # Components
 # Enable/disable the sample suppliers that should be started
@@ -29,23 +22,6 @@ debug = no
 api         = yes
 mail        = no
 dir         = no
-
-# Active Directory settings. !!! EXPERIMENTAL !!!
-[ad]
-adlookup     = no
-adserver     =
-search       =
-basedn       =
-fields       =
-username     =
-password     =
-countryfield =
-
-[workers]
-# This regex is used to check what e-mails should be checked in the Active Directory
-email_regex = 
-# The e-mail address of the Abuse mailbox. This is used by the Active Directory check
-emailaddr   = 
 
 # Email settings
 [imap]
@@ -57,11 +33,9 @@ folder      = INBOX/
 # Splunk settings
 [splunk]
 enabled     = no
-username    = 
-password    = 
 host        =
 port        = 
-index       = 
+sourcetype  = 
 token       = Splunk xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 # ElasticSearch settings

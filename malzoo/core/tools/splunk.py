@@ -9,12 +9,13 @@ def add_data(data):
         config_location = 'config/malzoo.conf'
         conf = SafeConfigParser()
         conf.read(config_location)
-        url = 'https://{0}:8088/services/collector'.format(conf.get('splunk','host'))
+        url = 'https://{0}:{1}/services/collector'.format(conf.get('splunk','host'),
+                conf.get('splunk','port'))
         header = {'Authorization':conf.get('splunk','token')}
         post_data = {
                       'time':int(time()),
                       'host':conf.get('splunk','host'),
-                      'sourcetype':'json_no_timestamp',
+                      'sourcetype':conf.get('splunk','sourcetype'),
                       'event':data
                     }
         log_data = json.dumps(post_data).encode('utf8')
