@@ -23,6 +23,11 @@ After the installation you need to adjust the configuration file malzoo.conf in 
 #Usage
 See this [Wiki page](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration#usage) on how to use Malzoo
 
+#Currently being developed
+- AWS CloudFormation script to deploy Malzoo in AWS
+- Make parts serverless for Cloud computing
+- Create new modules for threat intelligence context
+
 #Credit
 Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automate malware analyse by this project.
 Also a big thanks to all the developers of the modules and software used and making it available for everyone to use.
