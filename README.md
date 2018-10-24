@@ -27,6 +27,7 @@ See this [Wiki page](https://github.com/nheijmans/MalZoo/wiki/Installation-and-c
 - AWS CloudFormation script to deploy Malzoo in AWS
 - Make parts serverless for Cloud computing
 - Create new modules for threat intelligence context
+- Bug fixes
 
 # Credit
 Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automate malware analyse by this project.
