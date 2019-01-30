@@ -41,7 +41,7 @@ class EmailWorker(Worker):
             attached_files  = []
     
             #If the supplied email is a string, make it a Email object
-            if isinstance(Email, str):
+            if isinstance(Email['filename'], str):
                 msg = email.message_from_string(Email)
             else:
                 msg = Email
