@@ -9,7 +9,11 @@ A few examples where it can be used for:
 - Gather intell of large open source malware repositories (original intend of the project)
 - Monitor a mailbox, analyze the emails and attachments
 
-For more information, check out the [Wiki](https://github.com/nheijmans/malzoo/wiki/Welcome-to-the-MalZoo-wiki!) of this repository. 
+### Installation information on VM's and bare-metal
+For more information on installation and collection of data, check out the [Wiki](https://github.com/nheijmans/malzoo/wiki/Welcome-to-the-MalZoo-wiki!) of this repository. 
+
+### Cloud Serverless deployment
+For the deployment in the AWS Cloud with a Serverless architecture, check out the repository [Malzoo Serverless](https://github.com/nheijmans/malzoo_serverless) for an auto-deployment solution.
 
 ## Information collected
 See the wiki page [Information collected](https://github.com/nheijmans/MalZoo/wiki/Collected-data) which data is collected for which sample.
