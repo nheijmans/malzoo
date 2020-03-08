@@ -8,3 +8,4 @@ bottle
 simpleldap
 yara-python
 elasticsearch
+requests==1.2.3
