@@ -15,6 +15,12 @@ For more information on installation and collection of data, check out the [Wiki
 ### Cloud Serverless deployment
 For the deployment in the AWS Cloud with a Serverless architecture, check out the repository [Malzoo Serverless](https://github.com/nheijmans/malzoo_serverless) for an auto-deployment solution.
 
+### Docker container deployment
+If you would like to deploy the Malzoo project in a Docker container, you can start very easily with pulling the image from Docker Hub 
+```docker pull statixs/malzoo```
+
+And then start a container from there. See the repository [Malzoo Container](https://github.com/nheijmans/malzoo_container) for details. 
+
 ## Information collected
 See the wiki page [Information collected](https://github.com/nheijmans/MalZoo/wiki/Collected-data) which data is collected for which sample.
 
