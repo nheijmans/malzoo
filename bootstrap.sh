@@ -46,7 +46,10 @@ sleep 2
 #malzoo
 git clone https://github.com/nheijmans/malzoo.git
 cd malzoo
-sudo pip install -r requirements.txt -U
+python2 -m virtualenv .env
+source .env/bin/activate
+pip install -r requirements.txt -U
+deactivate
 cp config/malzoo.conf.dist config/malzoo.conf
 mkdir attachments storage uploads logs
 cd $HOME
