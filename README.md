@@ -25,19 +25,49 @@ And then start a container from there. See the repository [Malzoo Container](htt
 See the wiki page [Information collected](https://github.com/nheijmans/MalZoo/wiki/Collected-data) which data is collected for which sample.
 
 # Installation
-See the wiki page [Installation](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration) to see how to install MalZoo. The best option is to use the auto installation script bootstrap.sh and once that is done running you only have to execute ```export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH```
+See the wiki page [Installation](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration) to install MalZoo. The best option is to use the auto installation script bootstrap.sh and once that is done running you only have to execute ```export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH```
 
 # Configuration
 After the installation you need to adjust the configuration file malzoo.conf in the config directory. If you are using the Splunk functionality, create a HTTP event collector token in your Splunk instance and copy the token to the configuration file (behind the Splunk part, so you replace the xxx-'es). 
 
 # Usage
-See this [Wiki page](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration#usage) on how to use Malzoo
+See this [Wiki page](https://github.com/nheijmans/MalZoo/wiki/Installation-and-configuration#usage) on how to use Malzoo as an application. Below is the description on how to use the Docker image.
 
-# Currently being developed
-- AWS CloudFormation script to deploy Malzoo in AWS
-- Make parts serverless for Cloud computing
-- Create new modules for threat intelligence context
-- Bug fixes
+## Docker
+Pull the image from Docker Hub with the command 
+
+```
+docker pull statixs/malzoo:latest
+```
+
+#### Environment list
+The environment list contains two items that need to be included, in order for Malzoo to find the virtual environment of Python and to know where the library is for calculating the Fuzzy hashes. The environment file should contain:
+
+```
+PYTHONPATH=/home/malzoo/malzoo
+LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+```
+
+The first variable makes the virtual environment the Python path, so all the dependencies are found. The second variable is for the Fuzzy hash library to be found correctly.
+
+#### Start a container with persistent logs
+If you want to have the logs persistently stored on the host OS, use the following command 
+
+```
+docker container run --detach --publish 127.0.0.1:1338:1338/tcp --name malzoo_engine --env-file env.list --rm --volume=./malzoo-logs:/home/malzoo/malzoo/logs/ malzoo:latest
+```
+
+This will link the folder malzoo-logs to the Malzoo folder in the container for storing logs. These can then be collected in your favorite data analysis tool. The data of Malzoo is stored in JSON by default. If the data should be send to one of the other receivers like Splunk or MongoDB, you can configure that in the configuration file of Malzoo.
+
+#### Start a container with persistent sample storage
+Samples are stored by default in the $HOME/malzoo/storage/ folder. If you want those to be persistent on the host OS, use the following command 
+
+```
+docker container run --detach --publish 127.0.0.1:1338:1338/tcp --name malzoo_engine --env-file env.list --rm --volume=./malzoo-samples:/home/malzoo/malzoo/storage/ malzoo:latest
+```
+
+The samples are stored within a subfolder, that is named after the first 4 characters of the hash. This option allows for you to build a malware repository persistenly, while using Malzoo as the analysis engine to receive, analyze and store samples. By combining both the persistent logs and samples, the Malzoo engine containers can be scaled up by higher submission rates of samples and stopped in quiet hours.
+
 
 # Credit
 Special thanks goes to the Viper project (http://viper.li). I learned alot about how to automate malware analyse by this project.
