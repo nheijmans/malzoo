@@ -19,7 +19,7 @@ For the deployment in the AWS Cloud with a Serverless architecture, check out th
 If you would like to deploy the Malzoo project in a Docker container, you can start very easily with pulling the image from Docker Hub 
 ```docker pull statixs/malzoo```
 
-And then start a container from there. See the repository [Malzoo Container](https://github.com/nheijmans/malzoo_container) for details. 
+And then start a container from there. More instructions further below.
 
 ## Information collected
 See the wiki page [Information collected](https://github.com/nheijmans/MalZoo/wiki/Collected-data) which data is collected for which sample.
