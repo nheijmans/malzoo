@@ -4,14 +4,13 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
 # File Author / Maintainer
 MAINTAINER statixs
 
 # Update the repository sources list and install prerequisites
 RUN apt-get update && \
-add-apt-repository universe && \
 apt-get update && \
 apt-get install -y vim build-essential python-dev python2 virtualenv libtool bison autoconf python-magic tmux ssdeep git unzip zip python-pip python-bottle libldap-dev libsasl2-dev libldap2-dev libssl-dev wget sudo
 
