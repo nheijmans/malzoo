@@ -6,20 +6,16 @@
 # Set the base image to Ubuntu
 FROM ubuntu:16.04
 
-# File Author / Maintainer
-MAINTAINER statixs
-
 # Update the repository sources list and install prerequisites
 RUN apt-get update && \
 apt-get update && \
-apt-get install -y vim build-essential python-dev virtualenv libtool bison autoconf python-magic tmux ssdeep git unzip zip python-pip python-bottle libldap-dev libsasl2-dev libldap2-dev libssl-dev wget sudo
+apt-get install -y build-essential python-dev virtualenv libtool bison autoconf python-magic ssdeep unzip zip python-pip python-bottle libldap-dev libsasl2-dev libldap2-dev libssl-dev wget sudo
 
 #Install YARA
 RUN wget https://github.com/VirusTotal/yara/archive/v3.5.0.tar.gz && \
 tar -zxf v3.5.0.tar.gz && \
 cd yara-3.5.0 && \
-./bootstrap.sh && \
-./configure && \
+./bootstrap.sh && \./configure && \
 make && \
 make install && \
 echo "/usr/local/lib" >> /etc/ld.so.conf && \
