@@ -24,7 +24,7 @@ import pefile
 from hashlib import md5 as md5sum
 from hashlib import sha1 as sha1sum
 from pydeep import hash_file as fuzzy
-from pehash import pehash as ph
+from malzoo.core.tools.pehash import pehash as ph
 
 class Hasher:
     """ Class for calculating MD5, SHA-1, fuzzy and PE hashes """
