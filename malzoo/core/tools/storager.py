@@ -3,7 +3,7 @@ import os
 import sys
 import logging
 from shutil import move
-from hashes import Hasher
+from malzoo.core.tools.hashes import Hasher
 from configparser import SafeConfigParser
 
 def add_to_repository(sample):
