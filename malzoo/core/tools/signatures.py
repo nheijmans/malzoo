@@ -2,7 +2,7 @@
 import os
 import sys
 import yara
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 class Signatures:
     """ 

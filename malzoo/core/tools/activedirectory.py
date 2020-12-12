@@ -7,7 +7,7 @@ analysis.
 """
 import simpleldap
 import json
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 class ActiveDirectory:
     def __init__(self):

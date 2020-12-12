@@ -13,7 +13,7 @@ from bottle import request
 from bottle import route
 from bottle import run
 from zipfile import ZipFile
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 #Malzoo imports
 from malzoo.core.tools.general_info import GeneralInformation

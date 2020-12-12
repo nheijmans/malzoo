@@ -15,7 +15,7 @@ import os
 import sys
 import time
 import argparse
-from ConfigParser                       import SafeConfigParser
+from configparser                       import SafeConfigParser
 from multiprocessing                    import Process, Queue
 
 #Suppliers of samples

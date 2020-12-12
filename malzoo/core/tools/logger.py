@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import json
 import logging
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 def setup_logger(logger_name, log_file, level=logging.INFO):
     l = logging.getLogger(logger_name)

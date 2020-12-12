@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 from elasticsearch import Elasticsearch
 
 def add_data(data):

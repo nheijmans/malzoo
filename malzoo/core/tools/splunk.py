@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import json
 import requests
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 from time         import time
 
 def add_data(data):

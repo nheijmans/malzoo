@@ -4,7 +4,7 @@ import sys
 import logging
 from shutil import move
 from hashes import Hasher
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 def add_to_repository(sample):
     conf_parser = SafeConfigParser()
