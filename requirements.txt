@@ -9,4 +9,3 @@ simpleldap
 yara-python
 elasticsearch
 requests
-urllib3==1.23
