@@ -44,7 +44,7 @@ class SaveObject:
             data['filename']    = filename
             data['submit_date'] = int(time())
         except Exception as e:
-            print "SaveObject: Error on obj saving",e
+            print("SaveObject: Error on obj saving",e)
             pass
         finally:
             return data

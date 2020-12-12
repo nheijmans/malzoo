@@ -19,7 +19,7 @@ def add_data(data):
         logger.info(data)
 
     except Exception as e:
-        print "txtlogger, error",e
+        print("txtlogger, error",e)
     finally:
         return
 
@@ -29,6 +29,6 @@ def dbg_logger(data):
         logger.info(data)
 
     except Exception as e:
-        print "debug logger, error",e
+        print("debug logger, error",e)
     finally:
         return

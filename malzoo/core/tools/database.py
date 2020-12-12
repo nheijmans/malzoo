@@ -21,7 +21,7 @@ class MongoDatabase:
         try:
             object_id = self.collection.insert(data)
         except:
-            print "Error: Could not insert into Mongo"
+            print("Error: Could not insert into Mongo")
             pass
         
         finally:

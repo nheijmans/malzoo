@@ -21,6 +21,6 @@ def add_data(data):
         log_data = json.dumps(post_data).encode('utf8')
         r = requests.post(url, headers=header, data=log_data, verify=False)
     except Exception as e:
-        print "test, error",e
+        print("test, error",e)
     finally:
         return

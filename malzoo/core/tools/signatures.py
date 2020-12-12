@@ -32,13 +32,13 @@ class Signatures:
     
     def generate_index(self):
         config_location = 'config/malzoo.conf'
-        print "Opening config file: " + config_location + " (1/3)"
+        print("Opening config file: " + config_location + " (1/3)")
         conf_parser = SafeConfigParser()
         conf_parser.read(config_location)
     
         rules_location = conf_parser.get('settings','yara_rules')
     
-        print "Opening file index.yar in " + rules_location + "(2/3)"
+        print("Opening file index.yar in " + rules_location + "(2/3)")
         with open(rules_location + 'index.yara', 'w') as rules_index:
             for rule_file in os.listdir(rules_location):
                 # Skip rules with wrong extension
@@ -53,4 +53,4 @@ class Signatures:
                 line = 'include "{0}"\n'.format(rule_file)
                 rules_index.write(line)
     
-        print "Adding rules to index.yar and writing the file (3/3)"
+        print("Adding rules to index.yar and writing the file (3/3)")

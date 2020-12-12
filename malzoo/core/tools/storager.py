@@ -21,7 +21,7 @@ def add_to_repository(sample):
         move(sample, archive_dir+'/'+md5)
         success = True
     except Exception, e:
-        print e
+        print(e)
         success = False
     finally:
         return success

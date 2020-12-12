@@ -13,6 +13,6 @@ def add_data(data):
 
 	es.index(index=conf.get('elasticsearch','index'), doc_type='event', body=data)
     except Exception as e:
-        print "elasticsearch tool: error",e
+        print("elasticsearch tool: error",e)
     finally:
         return
