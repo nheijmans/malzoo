@@ -39,7 +39,7 @@ from malzoo.core.tools.signatures       import Signatures
 from malzoo.core.tools.logger           import setup_logger
 
 # Argument definition
-parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis', version='Malzoo-v2.0')
+parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis')
 parser.add_argument('-u','--update-yara', action='store_true', default=False,
            dest='yara', help='Update the YARA index')
 
