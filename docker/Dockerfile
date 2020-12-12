@@ -4,7 +4,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 # Update the repository sources list and install prerequisites
 RUN apt-get update && \
