@@ -10,7 +10,7 @@ It adds the samples to the Queue that is shared with the workers.
 from malzoo.common.abstract import Supplier
 
 #Default library imports
-from Queue        import Queue
+from queue        import Queue
 from time         import sleep
 from os           import listdir
 from os.path      import isfile
