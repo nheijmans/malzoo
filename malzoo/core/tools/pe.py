@@ -101,7 +101,8 @@ class PeInfo:
                                 for resource_lang in resource_id.directory.entries:
                                     try:
                                         data = self.pe.get_data(resource_lang.data.struct.OffsetToData, resource_lang.data.struct.Size)
-                                        filetype = magic.from_buffer(open(self.filename).read(1024)) 
+                                        mymagic = magic.Magic(mime=True)
+                                        filetype = mymagic.from_file(self.filename)
                                         lang = pefile.LANG.get(resource_lang.data.lang, 'qq_*unknown*')
                                         sublang = pefile.get_sublang_name_for_lang( resource_lang.data.lang, resource_lang.data.sublang )
                                         ret[i] = (name, resource_lang.data.struct.OffsetToData, resource_lang.data.struct.Size, filetype, lang, sublang)
