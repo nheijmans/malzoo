@@ -27,13 +27,6 @@ class PEWorker(Worker):
             # Get basic info
             ft      = general_info.get_filetype()
     
-            if (pe_info.packer_detect() != None or  
-               pe_info.packer_detect != [] or  
-               pe_info.packer_detect != "N.A."):
-                strings_sample = strings(sample['filename'])
-            else:
-                strings_sample = "Packer detected"
-    
             # Creating a dictionary with sample information
             sample_info = { 
             'filename'          : general_info.get_filename(),
