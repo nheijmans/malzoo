@@ -39,7 +39,7 @@ class PeInfo:
         """ Extract the imported DLL files from the PE file """
         # If the PE has the attribute, create a list with DLL's
         if self.pe != False and hasattr(self.pe, 'DIRECTORY_ENTRY_IMPORT'):
-            dll_list = [i.dll for i in self.pe.DIRECTORY_ENTRY_IMPORT]
+            dll_list = [str(i.dll) for i in self.pe.DIRECTORY_ENTRY_IMPORT]
             return ','.join(dll_list)
         else:
             return None
@@ -73,7 +73,7 @@ class PeInfo:
             
             if matches != None:
                 for match in matches:
-                    m       = ','.join(match)
+                    m       = ','.join(str(match))
                     result  = result+m
 
                 return result

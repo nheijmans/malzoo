@@ -7,7 +7,7 @@ It collects the information of the sample via different tools.
 from malzoo.common.abstract import Worker
 
 #Imports 
-from time                              import time
+from time                           import time
 from malzoo.core.tools.signatures   import Signatures
 from malzoo.core.tools.hashes       import Hasher
 from malzoo.core.tools.strings      import strings
@@ -23,9 +23,6 @@ class PEWorker(Worker):
             general_info = GeneralInformation(sample['filename'])
             pe_info      = PeInfo(sample['filename'], 'data/userdb.txt')
             sigs_yara    = Signatures()
-    
-            # Get basic info
-            ft      = general_info.get_filetype()
     
             # Creating a dictionary with sample information
             sample_info = { 
