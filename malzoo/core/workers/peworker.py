@@ -8,6 +8,7 @@ from malzoo.common.abstract import Worker
 
 #Imports 
 from time                           import time
+import traceback
 from malzoo.core.tools.signatures   import Signatures
 from malzoo.core.tools.hashes       import Hasher
 from malzoo.core.tools.strings      import strings
@@ -49,5 +50,6 @@ class PEWorker(Worker):
             self.store_sample(sample['filename'])
         except Exception as e:
             self.log('{0} - {1} - {2} '.format('peworker',sample,e))
+            traceback.print_exc()
         finally:
             return
