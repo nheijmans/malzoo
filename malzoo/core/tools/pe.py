@@ -19,7 +19,6 @@ This will print the data listed above.
 import sys
 import magic
 import pefile
-import peutils
 import datetime
 import collections
 
