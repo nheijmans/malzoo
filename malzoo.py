@@ -15,7 +15,7 @@ import os
 import sys
 import time
 import argparse
-from ConfigParser                       import SafeConfigParser
+from configparser                       import SafeConfigParser
 from multiprocessing                    import Process, Queue
 
 #Suppliers of samples
@@ -39,7 +39,7 @@ from malzoo.core.tools.signatures       import Signatures
 from malzoo.core.tools.logger           import setup_logger
 
 # Argument definition
-parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis', version='Malzoo-v2.0')
+parser = argparse.ArgumentParser(description='Malzoo: Automated Static Malware Analysis')
 parser.add_argument('-u','--update-yara', action='store_true', default=False,
            dest='yara', help='Update the YARA index')
 
@@ -61,14 +61,14 @@ if __name__ == '__main__':
 
     # Option --yara-update
     if options.yara:
-        print "[*] Updating YARA index..."
+        print("[*] Updating YARA index...")
         sigs_yara = Signatures()
         sigs_yara.generate_index()
-        print "[+] Done!"
+        print("[+] Done!")
     else:
         try:
-            print "[*] Malzoo runs in monitor mode now!" 
-            print "[*] Starting components..."
+            print("[*] Malzoo runs in monitor mode now!")
+            print("[*] Starting components...")
             suppliers = []
             workers   = []
             services  = []
@@ -78,14 +78,14 @@ if __name__ == '__main__':
 
             # Starting suppliers, if enabled in the configuration file
             if conf.getboolean('suppliers','api'):
-                print "[+] Starting API supplier!"
+                print("[+] Starting API supplier!")
                 ap = Process(target=WebApi, args=(dist_queue,))
                 ap.daemon = True
                 ap.start()
                 suppliers.append(ap)
 
             if conf.getboolean('suppliers','mail'):
-                print "[+] Starting mail supplier!"
+                print("[+] Starting mail supplier!")
                 imap = Imap()
                 mp = Process(target=imap.run, args=(mail_queue,))
                 mp.daemon = True
@@ -93,7 +93,7 @@ if __name__ == '__main__':
                 suppliers.append(mp)
 
             if conf.getboolean('suppliers','dir'):
-                print "[+] Starting Directory monitor!"
+                print("[+] Starting Directory monitor!")
                 monitor = Process(Monitor, args=(conf.get('settings','dirmonitor'),dist_queue,))
                 monitor.daemon = True
                 monitor.run()
@@ -159,8 +159,8 @@ if __name__ == '__main__':
                 supplier.terminate()
             for service in services:
                 service.terminate()
-            print e
-            print "[*] Thanks for using MalZoo!"
+            print(e)
+            print("[*] Thanks for using MalZoo!")
 
         finally:
             sys.exit()

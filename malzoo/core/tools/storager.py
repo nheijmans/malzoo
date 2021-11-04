@@ -3,8 +3,8 @@ import os
 import sys
 import logging
 from shutil import move
-from hashes import Hasher
-from ConfigParser import SafeConfigParser
+from malzoo.core.tools.hashes import Hasher
+from configparser import SafeConfigParser
 
 def add_to_repository(sample):
     conf_parser = SafeConfigParser()
@@ -20,8 +20,8 @@ def add_to_repository(sample):
     try:
         move(sample, archive_dir+'/'+md5)
         success = True
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
         success = False
     finally:
         return success

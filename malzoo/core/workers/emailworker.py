@@ -120,7 +120,7 @@ class EmailWorker(Worker):
                             url_info['msg_id']  = mail_info['msg_id']
                             url_info['sample_type'] = 'url'
                             self.share_data(url_info)
-        except Exception, e:
+        except Exception as e:
             self.log('{0} - {1} - {2} '.format('emailworker',sample,e))
         finally:
             return

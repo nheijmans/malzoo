@@ -4,7 +4,7 @@ The parent class Worker.
 """
 #Default imports
 from time               import sleep, time
-from ConfigParser       import SafeConfigParser
+from configparser       import SafeConfigParser
 from multiprocessing    import Process
 from threading          import Thread
 import  logging

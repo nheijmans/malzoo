@@ -69,7 +69,7 @@ class EmailToolkit:
                     pass
 
             except Exception as e:
-                print "get_details error:", e
+                print("get_details error:", e)
         finally:
             return details 
     
@@ -84,7 +84,7 @@ class EmailToolkit:
 #                headers[str(key).lower()] = str(value).lower()
                 headers += str(key).lower()+": "+str(value).lower()+"|"
         except Exception as e:
-            print "Emailtoolkit: headers error",e
+            print("Emailtoolkit: headers error",e)
         finally:
             return headers
 
@@ -99,7 +99,7 @@ class EmailToolkit:
             data['msg_id']      = msg_id
             data['sample_type'] = 'attachment'
         except Exception as e:
-            print "Emailtoolkit: Error on attachment parsing", e
+            print("Emailtoolkit: Error on attachment parsing", e)
         finally:
             return data
 
@@ -118,7 +118,7 @@ class EmailToolkit:
         try:
             email_header = email_header.split('Version 2.0\x0d\x0a', 1)[1]
         except Exception as e:
-            print "Emailworker: Ole error", e
+            print("Emailworker: Ole error", e)
             pass
     
         # Leaving us an RFC compliant email to parse

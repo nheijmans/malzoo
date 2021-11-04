@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import json
 import logging
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 def setup_logger(logger_name, log_file, level=logging.INFO):
     l = logging.getLogger(logger_name)
@@ -19,7 +19,7 @@ def add_data(data):
         logger.info(data)
 
     except Exception as e:
-        print "txtlogger, error",e
+        print("txtlogger, error",e)
     finally:
         return
 
@@ -29,6 +29,6 @@ def dbg_logger(data):
         logger.info(data)
 
     except Exception as e:
-        print "debug logger, error",e
+        print("debug logger, error",e)
     finally:
         return

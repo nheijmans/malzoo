@@ -29,7 +29,8 @@ class GeneralInformation:
 
     def get_filetype(self):
         """ Function that returns the filetype of the sample """
-        ft = magic.from_buffer(open(self.filename).read(2048), mime=True)
+        mymagic = magic.Magic(mime=True)
+        ft = mymagic.from_file(self.filename)
         return ft
 
     def get_filesize(self):

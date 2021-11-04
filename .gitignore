@@ -4,3 +4,4 @@ config/malzoo.conf
 uploads/*
 attachments/*
 storage/*
+.env/

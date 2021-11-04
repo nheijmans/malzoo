@@ -10,7 +10,7 @@ def get_urls(text):
         if len(urls) == 0:
             urls = None
     except Exception as e:
-        print "URL extractor:", e
+        print("URL extractor:", e)
         urls = None
     finally:
         return urls

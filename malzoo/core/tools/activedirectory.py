@@ -7,7 +7,7 @@ analysis.
 """
 import simpleldap
 import json
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 class ActiveDirectory:
     def __init__(self):
@@ -34,7 +34,7 @@ class ActiveDirectory:
                     if len(country_code) <= 3:
                         break
         except Exception as e:
-            print "Country code error", e
+            print("Country code error", e)
             country_code = None
         finally:
             return country_code
@@ -59,7 +59,7 @@ class ActiveDirectory:
             else:
                 country_code = None
         except Exception as e:
-            print "Error with AD check.", e
+            print("Error with AD check.", e)
             department = None
             country_code = None
         finally:

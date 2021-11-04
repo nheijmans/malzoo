@@ -24,7 +24,7 @@ class CuckooSandbox(CustomModule):
 
     def run(self):
         try:
-            print self.name, 'is running'
+            print(self.name, 'is running')
             self.submit(self.pkg)
         except Exception as e:
             self.log('{0} - {1} - {2}'.format('custom module',self.name,e))

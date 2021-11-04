@@ -19,7 +19,6 @@ This will print the data listed above.
 import sys
 import magic
 import pefile
-import peutils
 import datetime
 import collections
 
@@ -39,7 +38,7 @@ class PeInfo:
         """ Extract the imported DLL files from the PE file """
         # If the PE has the attribute, create a list with DLL's
         if self.pe != False and hasattr(self.pe, 'DIRECTORY_ENTRY_IMPORT'):
-            dll_list = [i.dll for i in self.pe.DIRECTORY_ENTRY_IMPORT]
+            dll_list = [str(i.dll) for i in self.pe.DIRECTORY_ENTRY_IMPORT]
             return ','.join(dll_list)
         else:
             return None
@@ -64,24 +63,6 @@ class PeInfo:
         else:
             return None
 
-    def packer_detect(self):  
-        """ attempt to detect the packer used """
-        if self.pe != False:
-            signatures  = peutils.SignatureDatabase(self.userdb)
-            matches     = signatures.match_all(self.pe, ep_only=True)  
-            result      = ''
-            
-            if matches != None:
-                for match in matches:
-                    m       = ','.join(match)
-                    result  = result+m
-
-                return result
-            else:
-                return None
-        else:
-            return None
-
     def check_rsrc(self):
         """ Function needed to determine the compilation language """
         try:
@@ -101,7 +82,8 @@ class PeInfo:
                                 for resource_lang in resource_id.directory.entries:
                                     try:
                                         data = self.pe.get_data(resource_lang.data.struct.OffsetToData, resource_lang.data.struct.Size)
-                                        filetype = magic.from_buffer(open(self.filename).read(1024)) 
+                                        mymagic = magic.Magic(mime=True)
+                                        filetype = mymagic.from_file(self.filename)
                                         lang = pefile.LANG.get(resource_lang.data.lang, 'qq_*unknown*')
                                         sublang = pefile.get_sublang_name_for_lang( resource_lang.data.lang, resource_lang.data.sublang )
                                         ret[i] = (name, resource_lang.data.struct.OffsetToData, resource_lang.data.struct.Size, filetype, lang, sublang)

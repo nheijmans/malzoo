@@ -10,7 +10,7 @@ import sys # temporary to catch keyboard error
 import time
 import email
 import imaplib
-import ConfigParser
+import configparser
 from multiprocessing import Process, Queue
 
 #Parent

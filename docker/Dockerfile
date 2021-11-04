@@ -4,22 +4,17 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu:16.04
-
-# File Author / Maintainer
-MAINTAINER statixs
-
+FROM ubuntu:20.04
+ ENV DEBIAN_FRONTEND=noninteractive
 # Update the repository sources list and install prerequisites
 RUN apt-get update && \
 apt-get update && \
-apt-get install -y vim build-essential python-dev virtualenv libtool bison autoconf python-magic tmux ssdeep git unzip zip python-pip python-bottle libldap-dev libsasl2-dev libldap2-dev libssl-dev wget sudo
-
+apt-get install -y build-essential git pkg-config python3-venv python3-dev python3-pip libtool bison autoconf python-magic ssdeep unzip zip python3-bottle libldap-dev libsasl2-dev libldap2-dev libssl-dev wget sudo
 #Install YARA
-RUN wget https://github.com/VirusTotal/yara/archive/v3.5.0.tar.gz && \
-tar -zxf v3.5.0.tar.gz && \
-cd yara-3.5.0 && \
-./bootstrap.sh && \
-./configure && \
+RUN wget https://github.com/VirusTotal/yara/archive/v4.0.2.tar.gz && \
+tar -zxf v4.0.2.tar.gz && \
+cd yara-4.0.2 && \
+./bootstrap.sh && \./configure && \
 make && \
 make install && \
 echo "/usr/local/lib" >> /etc/ld.so.conf && \
@@ -38,24 +33,22 @@ cd $HOME && \
 wget https://github.com/kbandla/pydeep/archive/master.zip && \
 unzip master.zip && \
 cd pydeep-master && \
-python setup.py build && \
-python setup.py install && \
+python3 setup.py build && \
+python3 setup.py install && \
 cd $HOME && \
 # Add new non-root user malzoo
 useradd -ms /bin/bash malzoo
-
 # Switch to malzoo user
 USER malzoo
 WORKDIR /home/malzoo
-
 # Download the Malzoo project from GitHub
-RUN git clone http://github.com/nheijmans/malzoo.git
+RUN git clone --single-branch --branch migration-python3 http://github.com/nheijmans/malzoo.git
 WORKDIR /home/malzoo/malzoo
 
 # Setup Virtual Environment
-RUN virtualenv malzoo-env && \
+RUN python3 -m venv malzoo-env && \
 /bin/bash -c "source malzoo-env/bin/activate" && \
-pip install -r requirements.txt && \
+pip3 install -r requirements.txt && \
 exit
 
 # Copy the configuration file to the correct name
@@ -68,4 +61,4 @@ mkdir attachments storage uploads logs
 # Open the port and start malzoo
 EXPOSE 1338
 WORKDIR /home/malzoo/malzoo
-ENTRYPOINT ["python","malzoo.py"]
+ENTRYPOINT ["python3","malzoo.py"]

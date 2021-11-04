@@ -6,7 +6,7 @@ In this module the databases that are supported can be used by the workers
 to add samples. For now only Mongo is supported.
 """
 from pymongo import MongoClient
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 class MongoDatabase:
     def __init__(self):
@@ -21,7 +21,7 @@ class MongoDatabase:
         try:
             object_id = self.collection.insert(data)
         except:
-            print "Error: Could not insert into Mongo"
+            print("Error: Could not insert into Mongo")
             pass
         
         finally:

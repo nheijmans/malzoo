@@ -70,7 +70,7 @@ class OfficeWorker(Worker):
             sample_info['indicators'] = indicators
             self.share_data(sample_info)
             self.store_sample(sample['filename'])
-        except Exception, e:
+        except Exception as e:
             self.log('{0} - {1} - {2} '.format('docworker',sample,e))
         finally:
             return
