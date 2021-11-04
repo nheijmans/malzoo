@@ -38,7 +38,6 @@ class PEWorker(Worker):
         'yara_results'      : sigs_yara.scan(sample['filename']),
         'pe_compiletime'    : pe_info.get_compiletime(),
         'pe_dll'            : pe_info.get_dll(),
-        'pe_packer'         : pe_info.packer_detect(),
         'pe_language'       : pe_info.get_language(),
         'original_filename' : pe_info.get_org_filename(),
         'submit_date'       : int(time()),

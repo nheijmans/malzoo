@@ -64,24 +64,6 @@ class PeInfo:
         else:
             return None
 
-    def packer_detect(self):  
-        """ attempt to detect the packer used """
-        if self.pe != False:
-            signatures  = peutils.SignatureDatabase(self.userdb)
-            matches     = signatures.match_all(self.pe, ep_only=True)  
-            result      = ''
-            
-            if matches != None:
-                for match in matches:
-                    m       = ','.join(str(match))
-                    result  = result+m
-
-                return result
-            else:
-                return None
-        else:
-            return None
-
     def check_rsrc(self):
         """ Function needed to determine the compilation language """
         try:
