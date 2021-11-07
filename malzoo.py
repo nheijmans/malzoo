@@ -73,8 +73,9 @@ if __name__ == '__main__':
             workers   = []
             services  = []
 
-            a_logger = setup_logger('analysis','logs/analysis_results.log')
-            d_logger = setup_logger('debug','logs/debug.log')
+            unique_ts = int(time.time())
+            a_logger = setup_logger('analysis','logs/analysis_results.log.{}'.format(unique_ts))
+            d_logger = setup_logger('debug','logs/debug.log.{}'.format(unique_ts))
 
             # Starting suppliers, if enabled in the configuration file
             if conf.getboolean('suppliers','api'):
