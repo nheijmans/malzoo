@@ -1,11 +1,11 @@
 #!/usr/bin/python
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 from elasticsearch import Elasticsearch
 
 def add_data(data):
     try:
         config_location = 'config/malzoo.conf'
-        conf = SafeConfigParser()
+        conf = ConfigParser()
         conf.read(config_location)
 
         es = Elasticsearch([{'host': conf.get('elasticsearch','host'), 

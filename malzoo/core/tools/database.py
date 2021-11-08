@@ -6,11 +6,11 @@ In this module the databases that are supported can be used by the workers
 to add samples. For now only Mongo is supported.
 """
 from pymongo import MongoClient
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 class MongoDatabase:
     def __init__(self):
-        conf_parser = SafeConfigParser()
+        conf_parser = ConfigParser()
         conf_parser.read('config/malzoo.conf')
 
         client = MongoClient()
