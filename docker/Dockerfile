@@ -42,7 +42,7 @@ useradd -ms /bin/bash malzoo
 USER malzoo
 WORKDIR /home/malzoo
 # Download the Malzoo project from GitHub
-RUN git clone --single-branch --branch migration-python3 http://github.com/nheijmans/malzoo.git
+RUN git clone --single-branch --branch master http://github.com/nheijmans/malzoo.git
 WORKDIR /home/malzoo/malzoo
 
 # Setup Virtual Environment
