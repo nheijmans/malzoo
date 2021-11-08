@@ -15,7 +15,7 @@ import os
 import sys
 import time
 import argparse
-from configparser                       import SafeConfigParser
+from configparser                       import ConfigParser
 from multiprocessing                    import Process, Queue
 
 #Suppliers of samples
@@ -46,7 +46,7 @@ parser.add_argument('-u','--update-yara', action='store_true', default=False,
 
 # Execution
 if __name__ == '__main__':
-    conf = SafeConfigParser()
+    conf = ConfigParser()
     conf.read('config/malzoo.conf')
 
     options      = parser.parse_args()

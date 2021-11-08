@@ -4,10 +4,10 @@ The parent class Worker.
 """
 #Default imports
 from time               import sleep, time
-from configparser       import SafeConfigParser
+from configparser       import ConfigParser
 from multiprocessing    import Process
 from threading          import Thread
-import  logging
+import logging
 
 #MalZoo imports
 from malzoo.core.tools.database import MongoDatabase
@@ -24,7 +24,7 @@ class Worker(Process):
         super(Worker, self).__init__()
         self.sample_q   = sample_q
         self.dist_q = dist_q
-        self.conf = SafeConfigParser()
+        self.conf = ConfigParser()
         self.conf.read('config/malzoo.conf')
 
     def process(self):
@@ -74,7 +74,7 @@ class Distributor(Process):
     def __init__(self,dist_q,pe_q,doc_q,zip_q,other_q,mod_q):
         super(Distributor, self).__init__()
         #Configuration file
-        self.conf = SafeConfigParser()
+        self.conf = ConfigParser()
         self.conf.read('config/malzoo.conf')
         
         #Sample queues
@@ -104,7 +104,7 @@ class Distributor(Process):
 class Service(object):
     def __init__(self):
         super(Service, self).__init__()
-        self.conf = SafeConfigParser()
+        self.conf = ConfigParser()
         self.conf.read('config/malzoo.conf')
 
     def submit(self):
@@ -121,7 +121,7 @@ class Service(object):
 class Tool(object):
     def __init__(self):
         super(Tool, self).__init__()
-        self.conf = SafeConfigParser()
+        self.conf = ConfigParser()
         self.conf.read('config/malzoo.conf')
 
     def use(self):
@@ -131,7 +131,7 @@ class CustomModule(Thread):
     def __init__(self, package):
         super(CustomModule, self).__init__()
         self.pkg = package
-        self.conf = SafeConfigParser()
+        self.conf = ConfigParser()
         self.conf.read('config/malzoo.conf')
 
     def log(self, data):

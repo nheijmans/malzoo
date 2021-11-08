@@ -7,12 +7,12 @@ analysis.
 """
 import simpleldap
 import json
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 class ActiveDirectory:
     def __init__(self):
         config_location = 'config/malzoo.conf'
-        self.conf = SafeConfigParser()
+        self.conf = ConfigParser()
         self.conf.read(config_location)
 
     def authenticate(self):

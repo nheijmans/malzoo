@@ -4,10 +4,10 @@ import sys
 import logging
 from shutil import move
 from malzoo.core.tools.hashes import Hasher
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 def add_to_repository(sample):
-    conf_parser = SafeConfigParser()
+    conf_parser = ConfigParser()
     conf_parser.read('config/malzoo.conf')
     SAMPLE_DIR = conf_parser.get('settings','repository')
      

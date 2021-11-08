@@ -1,13 +1,13 @@
 #!/usr/bin/python
 import json
 import requests
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 from time         import time
 
 def add_data(data):
     try:
         config_location = 'config/malzoo.conf'
-        conf = SafeConfigParser()
+        conf = ConfigParser()
         conf.read(config_location)
         url = 'https://{0}:{1}/services/collector'.format(conf.get('splunk','host'),
                 conf.get('splunk','port'))

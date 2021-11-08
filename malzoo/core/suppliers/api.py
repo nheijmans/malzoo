@@ -13,7 +13,7 @@ from bottle import request
 from bottle import route
 from bottle import run
 from zipfile import ZipFile
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 #Malzoo imports
 from malzoo.core.tools.general_info import GeneralInformation
@@ -56,7 +56,7 @@ def WebApi(dist_q):
             return "Sample already in uploads directory!\n"
         
     def start_api():
-        conf = SafeConfigParser()
+        conf = ConfigParser()
         conf.read('config/malzoo.conf')
         run(host=conf.get('malzoo','host'), port=conf.get('malzoo','port'), quiet=True)
 

@@ -2,7 +2,7 @@
 import os
 import sys
 import yara
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 class Signatures:
     """ 
@@ -13,7 +13,7 @@ class Signatures:
 
     def scan(self, filename, rule=None):
         # Open configuration file and get yara rules location
-        conf_parser = SafeConfigParser()
+        conf_parser = ConfigParser()
         conf_parser.read('config/malzoo.conf')
         rule_path = conf_parser.get('settings','yara_rules')
     
@@ -33,7 +33,7 @@ class Signatures:
     def generate_index(self):
         config_location = 'config/malzoo.conf'
         print("Opening config file: " + config_location + " (1/3)")
-        conf_parser = SafeConfigParser()
+        conf_parser = ConfigParser()
         conf_parser.read(config_location)
     
         rules_location = conf_parser.get('settings','yara_rules')
