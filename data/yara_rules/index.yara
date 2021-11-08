@@ -1,6 +1,5 @@
 include "apt1.yara"
 include "APT_NGO_wuaclt_PDF.yara"
-include "citizenlab.yara"
 include "Cryptolocker.yara"
 include "dridex.yar"
 include "embedded.yara"
