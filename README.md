@@ -54,7 +54,7 @@ The first variable makes the virtual environment the Python path, so all the dep
 If you want to have the logs persistently stored on the host OS, use the following command 
 
 ```
-docker container run --detach --publish 127.0.0.1:1338:1338/tcp --name malzoo_engine --env-file env.list --rm --volume=./malzoo-logs:/home/malzoo/malzoo/logs/ malzoo:latest
+docker container run --detach --publish 127.0.0.1:1338:1338/tcp --name malzoo_engine --env-file env.list --rm --volume=./malzoo-logs:/home/malzoo/malzoo/logs/ statixs/malzoo:latest
 ```
 
 This will link the folder malzoo-logs to the Malzoo folder in the container for storing logs. These can then be collected in your favorite data analysis tool. The data of Malzoo is stored in JSON by default. If the data should be send to one of the other receivers like Splunk or MongoDB, you can configure that in the configuration file of Malzoo.
@@ -63,7 +63,7 @@ This will link the folder malzoo-logs to the Malzoo folder in the container for 
 Samples are stored by default in the $HOME/malzoo/storage/ folder. If you want those to be persistent on the host OS, use the following command 
 
 ```
-docker container run --detach --publish 127.0.0.1:1338:1338/tcp --name malzoo_engine --env-file env.list --rm --volume=./malzoo-samples:/home/malzoo/malzoo/storage/ malzoo:latest
+docker container run --detach --publish 127.0.0.1:1338:1338/tcp --name malzoo_engine --env-file env.list --rm --volume=./malzoo-samples:/home/malzoo/malzoo/storage/ statixs/malzoo:latest
 ```
 
 The samples are stored within a subfolder, that is named after the first 4 characters of the hash. This option allows for you to build a malware repository persistenly, while using Malzoo as the analysis engine to receive, analyze and store samples. By combining both the persistent logs and samples, the Malzoo engine containers can be scaled up by higher submission rates of samples and stopped in quiet hours.
