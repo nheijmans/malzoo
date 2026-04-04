@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 A function that extracts all strings from a portable executable of 
 four characters or longer based on the regex supplied. 
@@ -17,7 +17,7 @@ def strings(filename):
 
     with open(filename, 'rb') as f:
         data    = f.read() # Read all data in memory
-        regexp  = '[A-Za-z0-9/\-:.,_$%()[\]<> ]{4,}'
+        regexp  = r'[A-Za-z0-9/\-:.,_$%()[\]<> ]{4,}'
         strings = re.findall(regexp, data)
         
         strings_UTF = [unicode(s,'utf-8','ignore') for s in strings]

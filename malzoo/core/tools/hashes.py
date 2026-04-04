@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 File is part of Malzoo
 
@@ -23,7 +23,7 @@ import sys
 import pefile
 from hashlib import md5 as md5sum
 from hashlib import sha1 as sha1sum
-from pydeep import hash_file as fuzzy
+import ppdeep
 from malzoo.core.tools.pehash import pehash as ph
 
 class Hasher:
@@ -47,7 +47,8 @@ class Hasher:
 
     def get_fuzzy(self):
         """ Generate Fuzzy of the sample """
-        fuzzy_hash = fuzzy(self.filename)
+        with open(self.filename, 'rb') as f:
+            fuzzy_hash = ppdeep.hash(f.read())
         return fuzzy_hash
 
     def get_pehash(self):

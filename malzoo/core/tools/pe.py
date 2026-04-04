@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 The PeInfo class is build to extract information from a Portable Executable
 like:

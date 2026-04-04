@@ -1,0 +1,79 @@
+############################################################
+# Dockerfile.dev - Local development build for Malzoo
+# Uses COPY instead of git clone to test local changes
+############################################################
+
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    pkg-config \
+    python3-venv \
+    python3-dev \
+    python3-pip \
+    libtool \
+    bison \
+    flex \
+    autoconf \
+    automake \
+    libmagic-dev \
+    libssl-dev \
+    libldap-dev \
+    libsasl2-dev \
+    wget \
+    unzip \
+    zip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install YARA 4.5.5
+RUN wget https://github.com/VirusTotal/yara/archive/v4.5.5.tar.gz && \
+    tar -zxf v4.5.5.tar.gz && \
+    cd yara-4.5.5 && \
+    ./bootstrap.sh && \
+    ./configure && \
+    make && \
+    make install && \
+    echo "/usr/local/lib" >> /etc/ld.so.conf && \
+    ldconfig && \
+    cd / && \
+    rm -rf v4.5.5.tar.gz yara-4.5.5
+
+# Install ssdeep 2.14.1
+RUN wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz && \
+    tar -xf ssdeep-2.14.1.tar.gz && \
+    cd ssdeep-2.14.1 && \
+    ./configure && \
+    make && \
+    make install && \
+    ldconfig && \
+    cd / && \
+    rm -rf ssdeep-2.14.1.tar.gz ssdeep-2.14.1
+
+# Add non-root user
+RUN useradd -ms /bin/bash malzoo
+USER malzoo
+WORKDIR /home/malzoo/malzoo
+
+# Copy local source code
+COPY --chown=malzoo:malzoo . .
+
+# Setup virtual environment and install dependencies
+RUN python3 -m venv malzoo-env && \
+    . malzoo-env/bin/activate && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Create config from template and required directories
+RUN cp config/malzoo.conf.dist config/malzoo.conf && \
+    mkdir -p attachments storage uploads logs
+
+# Environment
+ENV PYTHONPATH=/home/malzoo/malzoo
+ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+ENV PATH="/home/malzoo/malzoo/malzoo-env/bin:$PATH"
+
+EXPOSE 1338
+ENTRYPOINT ["python3", "malzoo.py"]

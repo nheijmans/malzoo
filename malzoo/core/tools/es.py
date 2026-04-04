@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 from configparser import ConfigParser
 from elasticsearch import Elasticsearch
 
@@ -8,10 +8,12 @@ def add_data(data):
         conf = ConfigParser()
         conf.read(config_location)
 
-        es = Elasticsearch([{'host': conf.get('elasticsearch','host'), 
-                             'port': conf.get('elasticsearch','port')}])
-        es.index(index=conf.get('elasticsearch','index'), doc_type='event', body=data)
+        host = conf.get('elasticsearch', 'host')
+        port = conf.get('elasticsearch', 'port')
+
+        es = Elasticsearch("http://{}:{}".format(host, port))
+        es.index(index=conf.get('elasticsearch', 'index'), document=data)
     except Exception as e:
-        print("elasticsearch tool: error",e)
+        print("elasticsearch tool: error", e)
     finally:
         return

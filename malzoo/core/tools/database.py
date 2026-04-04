@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 File is part of Malzoo
 
@@ -19,7 +19,7 @@ class MongoDatabase:
 
     def add_sample(self, data):
         try:
-            object_id = self.collection.insert(data)
+            object_id = self.collection.insert_one(data)
         except:
             print("Error: Could not insert into Mongo")
             pass

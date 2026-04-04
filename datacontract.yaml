@@ -1,0 +1,303 @@
+apiVersion: v3.1.0
+kind: DataContract
+id: malzoo-data-contract-1
+name: Malzoo static malware analysis data contract
+version: 1.0.0
+status: draft
+
+team:
+  name: Statixs
+
+description:
+  purpose: >
+    Schema for static malware analysis results produced by the Malzoo pipeline.
+    Each sample type (PE, office, email, zip, other) produces a document that is
+    stored in MongoDB, Elasticsearch, and/or Splunk.
+  usage: Consumed by threat-intelligence platforms and analyst dashboards.
+  limitations: >
+    Schema is schemaless at the storage layer (MongoDB). Fields marked as not
+    required may be absent or null when parsing fails.
+
+schema:
+  - name: pe_sample
+    description: Analysis result for Portable Executable (PE) files
+    properties:
+      - name: filename
+        logicalType: string
+        required: true
+        description: Base filename of the submitted sample
+      - name: filetype
+        logicalType: string
+        required: true
+        description: MIME type detected via libmagic
+      - name: filesize
+        logicalType: integer
+        required: true
+        description: File size in bytes
+      - name: md5
+        logicalType: string
+        required: true
+        description: MD5 hash of the file
+      - name: sha1
+        logicalType: string
+        required: true
+        description: SHA-1 hash of the file
+      - name: pehash
+        logicalType: string
+        description: Custom PE hash computed from structural features
+      - name: imphash
+        logicalType: string
+        description: Import hash derived from PE import table
+      - name: fuzzy
+        logicalType: string
+        description: SSDEEP fuzzy hash
+      - name: yara_results
+        logicalType: string
+        description: Comma-separated list of matched YARA rule names
+      - name: pe_compiletime
+        logicalType: string
+        description: PE compilation timestamp (format YYYY-MM-DD HH:MM:SS)
+      - name: pe_dll
+        logicalType: string
+        description: Comma-separated list of imported DLLs
+      - name: pe_language
+        logicalType: string
+        description: Compilation language detected from PE resources
+      - name: original_filename
+        logicalType: string
+        description: Original filename from PE version-info metadata
+      - name: submit_date
+        logicalType: integer
+        required: true
+        description: Unix timestamp of submission
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "exe" for PE samples
+      - name: id_tag
+        logicalType: string
+        required: true
+        description: User-supplied tag identifying the submission
+
+  - name: office_sample
+    description: Analysis result for Microsoft Office documents
+    properties:
+      - name: filename
+        logicalType: string
+        required: true
+        description: Base filename of the submitted document
+      - name: filetype
+        logicalType: string
+        required: true
+        description: MIME type detected via libmagic
+      - name: md5
+        logicalType: string
+        required: true
+        description: MD5 hash of the file
+      - name: sha1
+        logicalType: string
+        required: true
+        description: SHA-1 hash of the file
+      - name: id
+        logicalType: string
+        description: OLE indicator ID from oletools
+      - name: id_name
+        logicalType: string
+        description: OLE indicator name
+      - name: id_description
+        logicalType: string
+        description: OLE indicator description
+      - name: indicators
+        logicalType: object
+        description: >
+          VBA macro indicators keyed by ordinal. Each entry contains type,
+          keyword, and description fields.
+      - name: submit_date
+        logicalType: integer
+        required: true
+        description: Unix timestamp of submission
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "office" for document samples
+      - name: id_tag
+        logicalType: string
+        required: true
+        description: User-supplied tag identifying the submission
+
+  - name: email_sample
+    description: Analysis result for email messages
+    properties:
+      - name: subject
+        logicalType: string
+        description: Email subject line
+      - name: to
+        logicalType: string
+        description: Recipient address extracted from To header
+      - name: from
+        logicalType: string
+        description: Sender address extracted from From header
+      - name: cc
+        logicalType: string
+        description: CC recipients
+      - name: bcc
+        logicalType: string
+        description: BCC recipients
+      - name: date
+        logicalType: string
+        description: Date header value
+      - name: encoding
+        logicalType: string
+        description: Content-Transfer-Encoding header value
+      - name: msg_id
+        logicalType: string
+        description: Message-ID header value
+      - name: headers
+        logicalType: string
+        description: All headers concatenated with pipe separator
+      - name: body
+        logicalType: string
+        description: Plain-text email body
+      - name: attachments
+        logicalType: boolean
+        required: true
+        description: Whether the email contains attachments
+      - name: submit_date
+        logicalType: integer
+        required: true
+        description: Unix timestamp of submission
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "email" for email samples
+      - name: id_tag
+        logicalType: string
+        required: true
+        description: User-supplied tag identifying the submission
+
+  - name: email_attachment
+    description: Metadata for an attachment extracted from an email
+    properties:
+      - name: filename
+        logicalType: string
+        required: true
+        description: Original attachment filename
+      - name: md5
+        logicalType: string
+        required: true
+        description: MD5 hash of the attachment
+      - name: sha1
+        logicalType: string
+        required: true
+        description: SHA-1 hash of the attachment
+      - name: msg_id
+        logicalType: string
+        required: true
+        description: Message-ID of the parent email
+      - name: submit_date
+        logicalType: integer
+        required: true
+        description: Unix timestamp of extraction
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "attachment" for extracted email attachments
+      - name: id_tag
+        logicalType: string
+        required: true
+        description: User-supplied tag identifying the submission
+
+  - name: email_url
+    description: URL extracted from an email body
+    properties:
+      - name: url
+        logicalType: string
+        required: true
+        description: The extracted URL
+      - name: msg_id
+        logicalType: string
+        required: true
+        description: Message-ID of the parent email
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "url" for extracted URLs
+
+  - name: zip_sample
+    description: Analysis result for ZIP archive files
+    properties:
+      - name: filename
+        logicalType: string
+        required: true
+        description: Base filename of the submitted archive
+      - name: filetype
+        logicalType: string
+        required: true
+        description: MIME type detected via libmagic
+      - name: filesize
+        logicalType: integer
+        required: true
+        description: Archive size in bytes
+      - name: md5
+        logicalType: string
+        required: true
+        description: MD5 hash of the archive
+      - name: sha1
+        logicalType: string
+        required: true
+        description: SHA-1 hash of the archive
+      - name: files
+        logicalType: string
+        required: true
+        description: Comma-separated list of files contained in the archive
+      - name: submit_date
+        logicalType: integer
+        required: true
+        description: Unix timestamp of submission
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "zip" for archive samples
+      - name: id_tag
+        logicalType: string
+        required: true
+        description: User-supplied tag identifying the submission
+
+  - name: other_sample
+    description: Analysis result for files that do not match PE, office, email, or zip types
+    properties:
+      - name: filename
+        logicalType: string
+        required: true
+        description: Base filename of the submitted sample
+      - name: filetype
+        logicalType: string
+        required: true
+        description: MIME type detected via libmagic
+      - name: filesize
+        logicalType: integer
+        required: true
+        description: File size in bytes
+      - name: md5
+        logicalType: string
+        required: true
+        description: MD5 hash of the file
+      - name: sha1
+        logicalType: string
+        required: true
+        description: SHA-1 hash of the file
+      - name: yara_results
+        logicalType: string
+        description: Comma-separated list of matched YARA rule names
+      - name: submit_date
+        logicalType: integer
+        required: true
+        description: Unix timestamp of submission
+      - name: sample_type
+        logicalType: string
+        required: true
+        description: Sample type identifier, always "other" for unclassified file types
+      - name: id_tag
+        logicalType: string
+        required: true
+        description: User-supplied tag identifying the submission

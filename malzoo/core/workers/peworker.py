@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 This is the worker that will be executed per sample of the Portable Executable filetype. 
 It collects the information of the sample via different tools.
@@ -29,7 +29,7 @@ class PEWorker(Worker):
         sample_info = { 
         'filename'          : general_info.get_filename(),
         'filetype'          : general_info.get_filetype(),
-        'filesize'          : str(general_info.get_filesize()),
+        'filesize'          : general_info.get_filesize(),
         'md5'               : hasher.get_md5(),
         'sha1'              : hasher.get_sha1(),
         'pehash'            : hasher.get_pehash(),
