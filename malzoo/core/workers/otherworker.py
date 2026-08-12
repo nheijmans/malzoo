@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 All filetypes that do not have a specified worker are being picked
 up by this Worker. It will collect the general information and hashes
@@ -27,7 +27,7 @@ class OtherWorker(Worker):
             sample_info = { 
             'filename'          : general_info.get_filename(),
             'filetype'          : mymagic.from_file(sample['filename']),
-            'filesize'          : str(general_info.get_filesize()),
+            'filesize'          : general_info.get_filesize(),
             'md5'               : hasher.get_md5(),
             'sha1'              : hasher.get_sha1(),
             'yara_results'      : sigs_yara.scan(sample['filename']),
@@ -36,7 +36,7 @@ class OtherWorker(Worker):
             'id_tag'            : sample['tag']
             } 
             self.share_data(sample_info)
-            self.store_sample(sample)
+            self.store_sample(sample['filename'])
         except Exception as e:
             self.log('{0} - {1} - {2} '.format('otherworker',sample,e))
         finally:

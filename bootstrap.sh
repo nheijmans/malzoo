@@ -2,63 +2,57 @@
 echo "[*] Starting installation of Malzoo & Co. (requirements)..."
 sleep 2
 cd $HOME
+
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq vim build-essential python-dev libtool bison autoconf python-magic tmux ssdeep git unzip zip python-pip python-bottle python-requests libldap-dev libsasl2-dev libldap2-dev libssl-dev
-#Mongo
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-sudo apt-get update
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq mongodb-org
-export LC_ALL=C
-sudo service mongod start
-sleep 2
-#YARA
-wget https://github.com/VirusTotal/yara/archive/v3.5.0.tar.gz
-tar -zxf v3.5.0.tar.gz
-cd yara-3.5.0
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+    vim build-essential python3-dev python3-venv python3-pip \
+    libtool bison flex autoconf automake \
+    libmagic-dev libssl-dev libldap-dev libsasl2-dev \
+    tmux git unzip zip wget pkg-config
+
+# YARA 4.5.5
+echo "[*] Installing YARA 4.5.5..."
+wget https://github.com/VirusTotal/yara/archive/v4.5.5.tar.gz
+tar -zxf v4.5.5.tar.gz
+cd yara-4.5.5
 ./bootstrap.sh
 ./configure
 make
 sudo make install
-sudo echo "/usr/local/lib" >> /etc/ld.so.conf
+sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf'
 sudo ldconfig
 cd $HOME
 sleep 2
-#SSDeep
-wget http://sourceforge.net/projects/ssdeep/files/ssdeep-2.13/ssdeep-2.13.tar.gz/download
-mv download ssdeep.tar.gz
-tar -xf ssdeep.tar.gz
-cd ssdeep-*
+
+# ssdeep 2.14.1
+echo "[*] Installing ssdeep 2.14.1..."
+wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
+tar -xf ssdeep-2.14.1.tar.gz
+cd ssdeep-2.14.1
 ./configure
 make
 sudo make install
+sudo ldconfig
 cd $HOME
 sleep 2
-#Pydeep
-wget https://github.com/kbandla/pydeep/archive/master.zip
-unzip master.zip
-cd pydeep-master
-python setup.py build
-sudo python setup.py install
-cd $HOME
-sleep 2
-#malzoo
+
+# Malzoo
+echo "[*] Setting up Malzoo..."
 git clone https://github.com/nheijmans/malzoo.git
 cd malzoo
-python2 -m virtualenv .env
+python3 -m venv .env
 source .env/bin/activate
 pip install -r requirements.txt -U
 deactivate
 cp config/malzoo.conf.dist config/malzoo.conf
-mkdir attachments storage uploads logs
+mkdir -p attachments storage uploads logs
 cd $HOME
-rm -r master.zip pydeep-master ssdeep-2.13 ssdeep.tar.gz v3.5.0.tar.gz yara-3.5.0
+
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+# Cleanup build artifacts
+rm -rf v4.5.5.tar.gz yara-4.5.5 ssdeep-2.14.1.tar.gz ssdeep-2.14.1
+
 sleep 2
-#malzoo community modules
-#cd malzoo/malzoo/modules/
-#git clone https://github.com/nheijmans/malzoo-community.git
-#cd $HOME
-#sleep 2
 echo "[+] Done installing!"

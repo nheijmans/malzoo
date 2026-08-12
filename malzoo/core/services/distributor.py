@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 Distributor checks the queue and decides were the data should go to next.
 Workers can add hashes or files to the queue for services to search or analyze

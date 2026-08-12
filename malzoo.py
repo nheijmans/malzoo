@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 MalZoo is a mass malware repository script to collect & store information of malware samples. 
 With the information collected by MalZoo you can search for related malware and see trends in 

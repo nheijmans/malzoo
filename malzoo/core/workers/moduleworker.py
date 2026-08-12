@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 The module worker will execute all custom modules in the modules/ directory
 with the package delivered by malzoo core. This contains the MD5, filepath

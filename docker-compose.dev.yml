@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  malzoo:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "1338:1338"
+    volumes:
+      - malzoo-logs:/home/malzoo/malzoo/logs
+      - malzoo-storage:/home/malzoo/malzoo/storage
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:1338/test')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  malzoo-logs:
+  malzoo-storage:
